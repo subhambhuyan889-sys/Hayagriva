@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
-<meta name="hayagriva-build" content="2026-09-27-4">
+<meta name="hayagriva-build" content="2026-09-27-5">
 <title>HAYAGRIVA — AI Action & Safety Companion • build 2026-09-27-2</title>
 <style>
 :root{--bg:#04060c;--panel:rgba(10,15,27,.82);--line:rgba(148,163,184,.16);--text:#f8fbff;--muted:#91a0b4;--cyan:#67e8f9;--violet:#9b87ff;--green:#61e7bb;--gold:#e7bd68;--danger:#ff6b7a}
@@ -130,5 +130,5 @@ $("prompt").addEventListener("focus",()=>state("Listening • ready to receive y
 
 (async()=>{showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];history.push({role:"model",text:"Namaste. Main Hayagriva hoon."});window.history.replaceState(null,"",location.pathname);showApp();return}const s=saved();if(s){const f=await refresh(s);if(f)showApp()}})();
 </script>
-</body>
+<noscript><div style="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui;text-align:center;padding:24px"><div><div style="font-size:28px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><p style="color:#91a0b4">Please enable JavaScript to use Hayagriva.</p></div></div></noscript></body>
 </html>
