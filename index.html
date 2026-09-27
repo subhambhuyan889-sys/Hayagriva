@@ -112,7 +112,7 @@ async function handleOAuthCallback(){
   const error_description = hash.get("error_description");
 
   if(error){
-    history.replaceState(null, "", window.location.pathname);
+    window.history.replaceState(null, "", window.location.pathname);
     authMessage(decodeURIComponent((error_description || error).replace(/\\+/g, " ")));
     return false;
   }
@@ -126,7 +126,7 @@ async function handleOAuthCallback(){
       token_type: hash.get("token_type") || "bearer"
     };
     saveSession(oauthSession);
-    history.replaceState(null, "", window.location.pathname);
+    window.history.replaceState(null, "", window.location.pathname);
     session = oauthSession;
     return true;
   }
