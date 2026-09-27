@@ -115,7 +115,7 @@ $("photo").onclick=()=>pick("image");$("video").onclick=()=>pick("video");$("fil
 $("files").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Attached "+selectedFiles.length+" file(s). Tell me what you want me to do with them.";addBubble("ai",t);speak(t)}};$("cameraInput").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Photo captured. What should I check in it?";addBubble("ai",t);speak(t)}};
 
 document.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>{$("prompt").value=b.dataset.say;$("chatForm").classList.add("up");$("prompt").focus();});
-(async()=>{showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];history.push({role:"model",text:"Namaste. Main Hayagriva hoon."});history.replaceState?.(null,"",location.pathname);showApp();return}const s=saved();if(s){const f=await refresh(s);if(f)showApp()}})();
+(async()=>{showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];history.push({role:"model",text:"Namaste. Main Hayagriva hoon."});window.history.replaceState(null,"",location.pathname);showApp();return}const s=saved();if(s){const f=await refresh(s);if(f)showApp()}})();
 </script>
 </body>
 </html>
