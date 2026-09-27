@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SITA RAM — HAYAGRIVA</title>
+<style>
+:root{--bg:#04070d;--panel:rgba(10,17,28,.82);--line:rgba(148,163,184,.16);--text:#f7fbff;--muted:#91a0b2;--gold:#e7bd68;--cyan:#67e8f9;--violet:#9b87ff;--green:#61e7bb}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:var(--text);font:15px system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 500px at 50% -15%,rgba(103,232,249,.10),transparent 60%),radial-gradient(700px 500px at 5% 70%,rgba(155,135,255,.08),transparent 62%),linear-gradient(180deg,#050912,#03060b);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 75%)}
+.wrap{width:min(1120px,92%);margin:auto;padding:22px 0 70px}.brandbar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:18px;margin-bottom:30px}.companyBrand{display:flex;align-items:center;gap:12px}.companyLogo{width:46px;height:46px;border:1px solid rgba(231,189,104,.3);border-radius:15px;background:rgba(231,189,104,.07);display:grid;place-items:center}.companyLogo svg{width:31px;height:31px}.companyName{font-size:13px;font-weight:900;letter-spacing:.24em}.companyTag{font-size:9px;color:#748294;letter-spacing:.08em;margin-top:4px}.productBrand{text-align:center}.hayLogo{width:54px;height:54px;margin:auto;border-radius:18px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(103,232,249,.14),rgba(155,135,255,.14));border:1px solid rgba(145,190,255,.25);box-shadow:0 0 42px rgba(103,232,249,.12);animation:float 3.2s ease-in-out infinite}.hayLogo svg{width:36px;height:36px;filter:drop-shadow(0 0 9px rgba(103,232,249,.35))}.hayName{margin-top:8px;font-size:17px;font-weight:950;letter-spacing:.2em;background:linear-gradient(90deg,#fff,#9eeaf5,#b6a9ff,#fff);background-size:220% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 5s linear infinite}.hayTag{font-size:9px;color:#77869a;margin-top:4px;letter-spacing:.1em}.status{justify-self:end;color:#718095;font-size:10px;display:flex;align-items:center;gap:7px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
+button,input,textarea{font:inherit}button{cursor:pointer}.app{display:none}.card{border:1px solid var(--line);background:var(--panel);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);box-shadow:0 30px 90px rgba(0,0,0,.34);border-radius:26px}.auth{width:min(470px,100%);margin:5vh auto 0;padding:34px;position:relative;overflow:hidden}.auth:before{content:"";position:absolute;width:330px;height:330px;right:-170px;top:-190px;background:radial-gradient(circle,rgba(103,232,249,.15),transparent 68%);pointer-events:none}.auth:after{content:"";position:absolute;width:300px;height:300px;left:-190px;bottom:-190px;background:radial-gradient(circle,rgba(155,135,255,.12),transparent 68%);pointer-events:none}.authInner{position:relative;z-index:1}.authEyebrow{display:flex;align-items:center;gap:10px;margin-bottom:24px}.ownerIcon{width:42px;height:42px;border-radius:13px;background:linear-gradient(145deg,#162638,#0b1521);border:1px solid rgba(145,190,255,.2);display:grid;place-items:center}.ownerIcon svg{width:23px;height:23px}.eyebrowText b{font-size:11px;letter-spacing:.12em}.eyebrowText small{display:block;color:#738195;font-size:10px;margin-top:4px}.auth h1{font-size:36px;line-height:1.05;letter-spacing:-.05em;margin:0 0 9px}.muted{color:var(--muted);line-height:1.55}.auth .muted{font-size:13px;margin:0 0 25px}label{display:block;color:#aab6c5;font-size:11px;font-weight:750;letter-spacing:.04em;margin:17px 0 7px}.field{position:relative}.fieldIcon{position:absolute;left:15px;top:15px;color:#66768a;pointer-events:none}.field input{padding-left:42px}input,textarea{width:100%;border:1px solid rgba(148,163,184,.15);outline:0;color:var(--text);background:rgba(2,7,13,.66);border-radius:14px;padding:14px 15px;transition:.2s}input{height:52px}input::placeholder,textarea::placeholder{color:#526176}input:focus,textarea:focus{border-color:rgba(103,232,249,.48);box-shadow:0 0 0 4px rgba(103,232,249,.07)}.primary{width:100%;height:53px;border:0;border-radius:14px;margin-top:22px;color:#041014;font-weight:900;background:linear-gradient(110deg,#61e7bb,#67e8f9,#9b87ff);background-size:180% 100%;animation:flow 5s linear infinite;box-shadow:0 16px 35px rgba(103,232,249,.1)}.primary:disabled{opacity:.65;cursor:wait}.switch{text-align:center;margin-top:19px;font-size:12px;color:#76859a}.switch button{border:0;background:none;color:#8ceaf3;font-weight:800}.authMsg{min-height:20px;margin:12px 0 0;text-align:center;font-size:11px}.badges{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;margin:15px 0}.badge{font-size:9px;color:#8998aa;border:1px solid rgba(148,163,184,.13);border-radius:999px;padding:6px 9px;background:rgba(255,255,255,.02)}.authNote{margin-top:18px;padding:12px 13px;border-radius:13px;background:rgba(255,255,255,.025);border:1px solid rgba(148,163,184,.1);color:#7f8da0;font-size:10px;line-height:1.55;text-align:center}.authFooter{text-align:center;margin-top:18px;color:#566477;font-size:8px;letter-spacing:.15em}.hero{padding:35px 0 22px}.hero h1{font-size:clamp(36px,6vw,66px);line-height:.98;letter-spacing:-.065em;margin:0 0 16px}.hero p{max-width:690px;color:var(--muted);line-height:1.65}.grid{display:grid;grid-template-columns:1fr 300px;gap:16px}.chat{min-height:570px;padding:20px;display:flex;flex-direction:column}.messages{flex:1;overflow:auto;padding:2px 2px 16px}.msg{max-width:88%;padding:12px 14px;border-radius:15px;margin:10px 0;white-space:pre-wrap;line-height:1.5}.user{margin-left:auto;background:linear-gradient(135deg,#153c40,#1c3051)}.ai{background:rgba(255,255,255,.045);border:1px solid var(--line)}.composer{display:flex;gap:9px;border-top:1px solid var(--line);padding-top:14px}.composer textarea{resize:none;min-height:52px}.send{width:88px;border:0;border-radius:13px;background:#61e7bb;font-weight:900}.side{padding:20px}.side h3{margin:0 0 14px;font-size:14px}.feature{padding:13px 0;border-bottom:1px solid var(--line)}.feature:last-child{border:0}.feature b{display:block;margin-bottom:4px}.feature span{color:var(--muted);font-size:12px;line-height:1.45}.pill{padding:8px 12px;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.03);color:#aab6c5}@keyframes float{50%{transform:translateY(-4px);box-shadow:0 0 55px rgba(103,232,249,.18)}}@keyframes shine{to{background-position:220% center}}@keyframes flow{to{background-position:180% center}}@media(max-width:760px){.wrap{width:min(94%,540px);padding-top:14px}.brandbar{grid-template-columns:1fr auto;gap:12px;margin-bottom:15px}.productBrand{grid-column:1/-1;grid-row:1;justify-self:center}.companyBrand{grid-row:2}.status{grid-row:2}.auth{margin-top:3vh;padding:26px 20px}.auth h1{font-size:32px}.grid{grid-template-columns:1fr}.side{order:-1}.chat{min-height:500px}}
+.pill{cursor:pointer}<style>
+.googleBtn{width:100%;height:52px;border:1px solid rgba(148,163,184,.18);border-radius:14px;background:rgba(255,255,255,.035);color:#eef5ff;font-weight:800;display:flex;align-items:center;justify-content:center;gap:11px;margin:0 0 18px}.googleBtn:hover{background:rgba(255,255,255,.06);border-color:rgba(103,232,249,.3)}.googleG{font-weight:950;font-size:20px;background:conic-gradient(from -45deg,#4285f4 0 25%,#34a853 0 50%,#fbbc05 0 75%,#ea4335 0);-webkit-background-clip:text;background-clip:text;color:transparent}.or{display:flex;align-items:center;gap:10px;color:#59677a;font-size:9px;letter-spacing:.12em;margin:0 0 4px}.or:before,.or:after{content:"";height:1px;background:rgba(148,163,184,.12);flex:1}
+</style></style></head><body><div class="wrap">
+<header class="brandbar">
+<div class="companyBrand"><div class="companyLogo"><svg viewBox="0 0 40 40" fill="none"><path d="M29 6c-9 3-15 10-17 18-1 4 0 7 3 10" stroke="#E7BD68" stroke-width="2.4" stroke-linecap="round"/><path d="M12 27c8-1 15-6 20-14" stroke="#F4D58A" stroke-width="2.4" stroke-linecap="round"/><path d="M27 7l7 1-4 5" stroke="#E7BD68" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div><div class="companyName">SITA RAM</div><div class="companyTag">BUILDING WHAT TOMORROW NEEDS</div></div></div>
+<div class="productBrand"><div class="hayLogo"><svg viewBox="0 0 48 48" fill="none"><path d="M15 35c-2-7-1-14 3-20 3-4 7-6 12-6 4 0 7 2 9 5-4 0-7 1-9 4 4 1 6 4 7 8-3-1-6-1-8 1-2 2-3 5-3 8" stroke="#BDF6FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M20 17c-1-4 0-7 3-9M31 14l4-3M31 20h.01" stroke="#9B87FF" stroke-width="2.5" stroke-linecap="round"/><path d="M12 37h25" stroke="#67E8F9" stroke-width="2.5" stroke-linecap="round"/></svg></div><div class="hayName">HAYAGRIVA</div><div class="hayTag">AI ACTION &amp; SAFETY PLATFORM</div></div>
+<div class="status"><span class="dot"></span>Secure owner access</div>
+</header>
+<section id="auth" class="auth card"><div class="authInner">
+<div class="authEyebrow"><div class="ownerIcon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.7-3 8.3-7 10-4-1.7-7-5.3-7-10V6l7-3Z" stroke="#67E8F9" stroke-width="1.7"/><path d="M9 12l2 2 4-4" stroke="#61E7BB" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="eyebrowText"><b>OWNER ACCESS</b><small>Private workspace • controlled actions</small></div></div>
+<h1 id="authTitle">Welcome back.</h1><p class="muted" id="authSub">Sign in to your Hayagriva owner account.</p>
+<button id="googleBtn" class="googleBtn" type="button"><span class="googleG">G</span> Continue with Google</button><div class="or"><span>OR</span></div><form id="authForm"><label id="nameLabel" style="display:none">Name</label><div class="field" id="nameField" style="display:none"><span class="fieldIcon">◉</span><input id="name" autocomplete="name" placeholder="Your name"></div><label>Email</label><div class="field"><span class="fieldIcon">✉</span><input id="email" type="email" required autocomplete="email" placeholder="you@example.com"></div><label>Password</label><div class="field"><span class="fieldIcon">●</span><input id="password" type="password" required minlength="6" autocomplete="current-password" placeholder="Enter your password"></div><button class="primary" id="authBtn">Sign in securely</button></form>
+<div class="switch"><span id="switchText">New to Hayagriva?</span> <button id="switchBtn" type="button">Create account</button></div><p id="authMsg" class="muted authMsg"></p>
+<div class="badges"><span class="badge">🔐 Owner controlled</span><span class="badge">🛡 Privacy first</span><span class="badge">✓ Secure access</span></div>
+<div class="authNote">Conversation is not permission. Important actions remain under the owner's control and require explicit confirmation.</div><div class="authFooter">SITA RAM • HAYAGRIVA • PRIVATE BY DESIGN</div>
+</div></section>
+<section id="app" class="app"><div style="display:flex;justify-content:flex-end;margin-bottom:8px"><button id="logout" class="pill" type="button">Sign out</button></div><div class="hero"><h1>Your intent.<br>Our intelligence.</h1><p>Ask Hayagriva to understand, research, plan, and prepare useful actions. Important real-world actions always require explicit owner confirmation.</p></div><div class="grid"><section class="card chat"><div id="messages" class="messages"></div><form id="chatForm" class="composer"><textarea id="prompt" required placeholder="Ask Hayagriva anything useful…"></textarea><button class="send">Send</button></form></section><aside class="card side"><h3>Hayagriva V1</h3><div class="feature"><b>Study &amp; work</b><span>Explain concepts, draft, code, and plan projects.</span></div><div class="feature"><b>Research</b><span>Prepare information and useful next steps.</span></div><div class="feature"><b>Action safety</b><span>Conversation is not permission. Consequential actions need confirmation.</span></div><div class="feature"><b>Privacy</b><span>AI credentials remain server-side.</span></div></aside></div></section></div>
+<script>const SUPABASE_URL = "https://geapiwgzcpqylocaegzh.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_Kb6-uQ1XaOgP9TdR1xSlrQ_dJUYnPQm";
+const SESSION_KEY = "hayagriva_session_v1";
+const $ = id => document.getElementById(id);
+let signupMode = false;
+let history = [];
+let session = null;
+
+function showAuth(){ $("auth").style.display="block"; $("app").style.display="none"; $("logout").style.display="none"; }
+function showApp(){ $("auth").style.display="none"; $("app").style.display="block"; $("logout").style.display="block"; }
+function addMsg(role,text){ const d=document.createElement("div"); d.className="msg "+(role==="user"?"user":"ai"); d.textContent=text; $("messages").appendChild(d); $("messages").scrollTop=$("messages").scrollHeight; }
+function authMessage(t){ $("authMsg").textContent=t||""; }
+function setLoading(t){ $("authBtn").disabled=true; $("authBtn").textContent=t; }
+function clearLoading(){ $("authBtn").disabled=false; $("authBtn").textContent=signupMode?"Create account":"Sign in securely"; }
+function saveSession(s){ session=s; if(s) localStorage.setItem(SESSION_KEY,JSON.stringify(s)); else localStorage.removeItem(SESSION_KEY); }
+function loadSavedSession(){ try{ const x=JSON.parse(localStorage.getItem(SESSION_KEY)||"null"); return x&&x.access_token&&x.refresh_token?x:null; }catch{return null;} }
+
+async function authFetch(path, body){
+  const r=await fetch(SUPABASE_URL+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":SUPABASE_PUBLISHABLE_KEY,"Authorization":"Bearer "+SUPABASE_PUBLISHABLE_KEY},body:JSON.stringify(body)});
+  let data={}; try{data=await r.json();}catch{}
+  if(!r.ok) throw new Error(data.msg||data.error_description||data.message||data.error||`Request failed (${r.status})`);
+  return data;
+}
+
+async function refreshSession(s){
+  try{ const data=await authFetch("/auth/v1/token?grant_type=refresh_token",{refresh_token:s.refresh_token}); saveSession(data); return data; }
+  catch(e){ saveSession(null); return null; }
+}
+
+
+$("googleBtn").onclick=()=>{
+  const redirectTo=window.location.origin+window.location.pathname;
+  const url=SUPABASE_URL+"/auth/v1/authorize?provider=google&redirect_to="+encodeURIComponent(redirectTo)+"&apikey="+encodeURIComponent(SUPABASE_PUBLISHABLE_KEY);
+  window.location.href=url;
+};
+
+$("switchBtn").onclick=()=>{
+  signupMode=!signupMode;
+  $("authTitle").textContent=signupMode?"Create your Hayagriva owner account":"Welcome back";
+  $("authSub").textContent=signupMode?"Your account becomes the owner identity for this Hayagriva instance.":"Sign in to your Hayagriva owner account.";
+  $("nameLabel").style.display=signupMode?"block":"none"; $("nameField").style.display=signupMode?"block":"none"; $("name").required=signupMode;
+  $("authBtn").textContent=signupMode?"Create account":"Sign in securely";
+  $("switchText").textContent=signupMode?"Already have an account?":"New to Hayagriva?";
+  $("switchBtn").textContent=signupMode?"Sign in":"Create account";
+  authMessage("");
+};
+
+$("authForm").onsubmit=async e=>{
+  e.preventDefault();
+  setLoading(signupMode?"Creating account…":"Signing in…"); authMessage("");
+  try{
+    const email=$("email").value.trim(), password=$("password").value, name=$("name").value.trim();
+    let data;
+    if(signupMode){
+      data=await authFetch("/auth/v1/signup",{email,password,data:{display_name:name}});
+      if(!data.access_token){ authMessage("Account created. Check your email to verify it, then sign in."); return; }
+    }else{
+      data=await authFetch("/auth/v1/token?grant_type=password",{email,password});
+    }
+    saveSession(data); history=[]; showApp();
+    if($("messages").children.length===0) addMsg("ai","Namaste. Main Hayagriva hoon. Batao, tumhe kya karna hai?");
+  }catch(err){ authMessage("Connection error: "+(err?.message||"Please try again.")); }
+  finally{clearLoading();}
+};
+
+$("logout").onclick=async()=>{ session=null; localStorage.removeItem(SESSION_KEY); history=[]; showAuth(); authMessage("Signed out securely."); };
+
+$("chatForm").onsubmit=async e=>{
+  e.preventDefault();
+  const message=$("prompt").value.trim(); if(!message||!session)return;
+  $("prompt").value=""; addMsg("user",message);
+  const send=$(".send"); send.disabled=true; send.textContent="…";
+  try{
+    const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai",{method:"POST",headers:{"Content-Type":"application/json","Authorization":"Bearer "+session.access_token},body:JSON.stringify({message,history})});
+    const data=await r.json();
+    if(!r.ok) throw new Error(data.error||data.message||"Hayagriva request failed");
+    addMsg("ai",data.text); history.push({role:"user",text:message},{role:"model",text:data.text}); if(history.length>20)history=history.slice(-20);
+  }catch(err){ addMsg("ai","I couldn't complete that request right now. "+(err?.message||"Please try again.")); }
+  finally{send.disabled=false;send.textContent="Send";}
+};
+
+(async()=>{
+  showAuth();
+  const saved=loadSavedSession();
+  if(saved){
+    const fresh=await refreshSession(saved);
+    if(fresh){ session=fresh; showApp(); if($("messages").children.length===0)addMsg("ai","Namaste. Main Hayagriva hoon. Batao, tumhe kya karna hai?"); return; }
+  }
+})();
+</script>
+</body>
+</html>
