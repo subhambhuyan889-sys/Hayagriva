@@ -109,6 +109,7 @@ $("chatForm").onsubmit=async e=>{
  finally{send.disabled=false;send.textContent="Send"}
 };
 
+async function checkAIService(){try{const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai?health="+Date.now(),{cache:"no-store"});const d=await r.json();if(d.ok&&d.gemini_configured){setVoiceStatus("AI online • Ready")}else{setVoiceStatus("AI service needs configuration")}}catch(e){setVoiceStatus("AI connection unavailable")}}
 async function handleOAuthCallback(){
   const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
   const access_token = hash.get("access_token");
@@ -146,6 +147,7 @@ async function handleOAuthCallback(){
   if(await handleOAuthCallback()){
     history = [];
     showApp();
+    checkAIService();
     if($("messages").children.length===0){
       addMsg("ai","Namaste. Main Hayagriva hoon. Batao, tumhe kya karna hai?");
     }
@@ -158,6 +160,7 @@ async function handleOAuthCallback(){
     if(fresh){
       session=fresh;
       showApp();
+      checkAIService();
       if($("messages").children.length===0){
         addMsg("ai","Namaste. Main Hayagriva hoon. Batao, tumhe kya karna hai?");
       }
