@@ -97,6 +97,12 @@
 <div id="permissionSheet class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px"><h2 style="margin:4px 0 6px">Settings &amp; Permissions</h2><p class="muted" style="margin-top:0">Control Hayagriva features and device access from one place. Allowed items can be switched Off at any time.</p>
 <div id="permissionList" style="display:grid;gap:8px;margin-top:14px"></div>
 <div class="cameraActions"><button id="closePermissions" class="cancel">Close</button></div></div></div>
+<div id="mindnessSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:620px">
+<h2 style="margin:4px 0 6px">Mindness</h2><p class="muted" style="margin-top:0">A separate AI space for calm conversations, reflection, focus and daily mindset support.</p>
+<div id="mindnessMessages" style="max-height:300px;overflow:auto;padding:8px 2px"></div>
+<form id="mindnessForm" class="composer" style="margin-top:10px"><textarea id="mindnessPrompt" rows="1" required placeholder="Talk to Mindness…"></textarea><button class="send">Send</button></form>
+<div class="cameraActions"><button id="closeMindness" class="cancel" type="button">Close</button></div>
+</div></div>
 <div id="trialSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:520px;text-align:center">
 <h2 style="margin:4px 0 8px">Hayagriva Premium</h2>
 <div id="trialTitle" style="font-size:20px;font-weight:900;color:var(--cyan)">15-day free trial</div>
@@ -147,7 +153,7 @@
 <div class="composerWrap">
 
 <form id="chatForm" class="composer"><textarea id="prompt" rows="1" required placeholder="Speak or type to Hayagriva…"></textarea><button class="send">Send</button></form>
-<div class="inputTools"><button type="button" class="mini" id="photo">🖼️ Gallery</button><button type="button" class="mini" id="video">🎥 Video</button><button type="button" class="mini" id="file">📄 Document</button><button type="button" class="mini" id="camera">📸 Camera</button><button type="button" class="mini" id="liveCamera">🎥 Live camera</button><input id="files" type="file" multiple hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div id="cameraSheet" class="cameraSheet" hidden><div class="cameraBox"><video id="cameraVideo" autoplay playsinline></video><div class="cameraActions"><button id="flipCamera" class="pill" type="button">↔ Front camera</button><button id="takePhoto" class="confirm" type="button">Capture</button><button id="closeCamera" class="cancel" type="button">Close</button></div></div></div></div>
+<div class="inputTools"><button type="button" class="mini" id="photo">🖼️ Gallery</button><button type="button" class="mini" id="video">🎥 Video</button><button type="button" class="mini" id="file">📄 Document</button><button type="button" class="mini" id="camera">📸 Camera</button><button type="button" class="mini" id="liveCamera">🎥 Live camera</button><button type="button" class="mini" id="mindness">🧠 Mindness</button><input id="files" type="file" multiple hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div id="cameraSheet" class="cameraSheet" hidden><div class="cameraBox"><video id="cameraVideo" autoplay playsinline></video><div class="cameraActions"><button id="flipCamera" class="pill" type="button">↔ Front camera</button><button id="takePhoto" class="confirm" type="button">Capture</button><button id="closeCamera" class="cancel" type="button">Close</button></div></div></div></div>
 </div>
 </div>
 </section>
@@ -561,6 +567,25 @@ document.addEventListener("pointermove",e=>{
 $("prompt").addEventListener("focus",()=>state(ownerVoiceProfile?"Listening • owner voice ready":"Voice locked • enroll owner voice first"));
 
 (async()=>{bootDone();showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];window.history.replaceState(null,"",location.pathname);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200);return}const s=saved();if(s){const f=await refresh(s);if(f){showApp();loadOwnerVoice();updateOwnerVoiceUI();setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200)}}})();
+let mindnessHistory=[];
+function mindnessBubble(role,text){
+  const box=$("mindnessMessages");if(!box)return;
+  const d=document.createElement("div");d.className="bubble "+(role==="user"?"user":"ai");d.style.display="block";d.textContent=text;box.append(d);box.scrollTop=box.scrollHeight;
+}
+$("mindness").onclick=()=>{if(!enforcePremium())return;$("mindnessSheet").hidden=false};
+$("closeMindness").onclick=()=>{$("mindnessSheet").hidden=true};
+$("mindnessForm").onsubmit=async e=>{
+ e.preventDefault();if(!enforcePremium())return;
+ const input=$("mindnessPrompt"),m=input.value.trim();if(!m||sending)return;input.value="";
+ mindnessBubble("user",m);state("Thinking • Mindness is working");
+ try{
+  const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai?ts="+Date.now(),{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"x-client-info":"hayagriva-mindness"},body:JSON.stringify({message:"Mindness mode: respond as a calm, supportive mindset and reflection assistant. User says: "+m,history:mindnessHistory,attachments:[],audio:false})});
+  const d=await r.json();if(!r.ok)throw new Error(d.error||"Mindness request failed");
+  const reply=d.reply||d.text||"I'm here. Tell me what's on your mind.";
+  mindnessBubble("ai",reply);mindnessHistory.push({role:"user",text:m},{role:"model",text:reply});mindnessHistory=mindnessHistory.slice(-12);speak(reply);
+ }catch(err){mindnessBubble("ai","Mindness: "+(err.message||"Please try again."))}
+ finally{state("Listening • ready when you are")}
+};
 </script>
 <noscript><div style="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui;text-align:center;padding:24px"><div><div style="font-size:28px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><p style="color:#91a0b4">Please enable JavaScript to use Hayagriva.</p></div></div></noscript></body>
 </html>
