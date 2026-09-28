@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
-<meta name="hayagriva-build" content="2026-09-28-1">
+<meta name="hayagriva-build" content="2026-09-28-2">
 <title>HAYAGRIVA — AI Action & Safety Companion • build 2026-09-28-1</title>
 <style>
 :root{--bg:#04060c;--panel:rgba(10,15,27,.82);--line:rgba(148,163,184,.16);--text:#f8fbff;--muted:#91a0b4;--cyan:#67e8f9;--violet:#9b87ff;--green:#61e7bb;--gold:#e7bd68;--danger:#ff6b7a}
@@ -63,7 +63,7 @@ async function refresh(s){try{const d=await authFetch("/auth/v1/token?grant_type
 
 $("google").onclick=()=>{const red=window.location.origin+window.location.pathname;location.href=SUPABASE_URL+"/auth/v1/authorize?provider=google&redirect_to="+encodeURIComponent(red)+"&apikey="+encodeURIComponent(KEY)}
 $("switch").onclick=()=>{signup=!signup;$("name").style.display=signup?"block":"none";$("nameLabel").style.display=signup?"block":"none";$("name").required=signup;$("authBtn").textContent=signup?"Create account":"Sign in securely";$("switchText").textContent=signup?"Already have an account?":"New to Hayagriva?";$("switch").textContent=signup?"Sign in":"Create account";authMsg("")}
-$("authForm").onsubmit=async e=>{e.preventDefault();$("authBtn").disabled=true;authMsg("");try{let d;if(signup)d=await authFetch("/auth/v1/signup",{email:$("email").value.trim(),password:$("password").value,data:{display_name:$("name").value.trim()}});else d=await authFetch("/auth/v1/token?grant_type=password",{email:$("email").value.trim(),password:$("password").value});if(!d.access_token){authMsg("Account created. Check your email, then sign in.");return}save(d);showApp();speak("Namaste. Main Hayagriva hoon. Bolo, aaj kya karna hai?")}catch(err){authMsg(err.message||"Please try again")}finally{$("authBtn").disabled=false}}
+$("authForm").onsubmit=async e=>{e.preventDefault();$("authBtn").disabled=true;authMsg("");try{let d;if(signup)d=await authFetch("/auth/v1/signup",{email:$("email").value.trim(),password:$("password").value,data:{display_name:$("name").value.trim()}});else d=await authFetch("/auth/v1/token?grant_type=password",{email:$("email").value.trim(),password:$("password").value});if(!d.access_token){authMsg("Account created. Check your email, then sign in.");return}save(d);showApp();speak("Namaste. Main Hayagriva hoon. Voice detection is ready. Bolo, main sun raha hoon.");setTimeout(startVoice,1200)}catch(err){authMsg(err.message||"Please try again")}finally{$("authBtn").disabled=false}}
 $("logout").onclick=()=>{save(null);history=[];showAuth()}
 
 function addBubble(role,text){const d=document.createElement("div");d.className="bubble "+role;d.textContent=text;$("messages").appendChild(d);$("messages").scrollTop=$("messages").scrollHeight}
@@ -87,8 +87,54 @@ function speak(t,audioB64,audioMime){if(!t)return;
   fallbackSpeak(t);
 }
 function fallbackSpeak(t){if(!("speechSynthesis"in window)||!t)return;const u=new SpeechSynthesisUtterance(t);const lang=/[\u0900-\u097F]/.test(t)?"hi-IN":"en-IN";u.lang=lang;u.voice=pickVoice(lang);u.rate=.9;u.pitch=1.12;u.volume=1;u.onstart=()=>state("Speaking • Hayagriva is talking");u.onboundary=()=>{const m=$(".mouth");if(m){m.style.height=(6+Math.random()*12)+"px";m.style.transform="scaleX("+(0.72+Math.random()*.55)+")"}};u.onerror=()=>state("Listening • ready when you are");u.onend=()=>{const m=$(".mouth");if(m){m.style.height="17px";m.style.transform="scaleX(1)"}state("Listening • ready when you are");if(voiceMode&&!listening)setTimeout(startVoice,450)};speechSynthesis.cancel();speechSynthesis.resume();speechSynthesis.speak(u)}
-function stopVoice(){voiceMode=false;if(recognition)try{recognition.stop()}catch{}listening=false;$("mic").classList.remove("active");state("Listening • ready when you are")}
-function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;voiceMode=true;if(!SR){speak("Voice input is not supported in this browser.");return}if(listening)return;if(!recognition){recognition=new SR();recognition.lang="hi-IN";recognition.interimResults=true;recognition.continuous=false;recognition.onstart=()=>{listening=true;$("mic").classList.add("active");state("Listening • speak naturally")};recognition.onresult=e=>{let t="";for(let i=e.resultIndex;i<e.results.length;i++)t+=e.results[i][0].transcript;$("prompt").value=t.trim()};recognition.onerror=()=>{listening=false;$("mic").classList.remove("active");state("Listening • ready when you are")};recognition.onend=()=>{listening=false;$("mic").classList.remove("active");if($("prompt").value.trim())$("chatForm").requestSubmit();else {state("Listening • ready when you are");if(voiceMode)setTimeout(startVoice,300)}}}try{recognition.start()}catch{}}
+function stopVoice(){voiceMode=false;if(recognition)try{recognition.stop()}catch{}listening=false;$("mic").classList.remove("active");state("Voice paused • tap to resume")}
+function handleVoiceText(t){
+  t=(t||"").trim();
+  if(!t)return;
+  const low=t.toLowerCase();
+  if(/(?:camera|कैमरा).*(?:open|start|खोल|चालू)|(?:open|start|खोल|चालू).*(?:camera|कैमरा)/i.test(low)){
+    openLiveCamera();
+    speak("Camera permission is needed. Please allow it when your browser asks.");
+    return;
+  }
+  $("prompt").value=t;
+  $("chatForm").requestSubmit();
+}
+function startVoice(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  voiceMode=true;
+  if(!SR){speak("Voice input is not supported in this browser.");return}
+  if(listening)return;
+  if(!recognition){
+    recognition=new SR();
+    recognition.lang="hi-IN";
+    recognition.interimResults=true;
+    recognition.continuous=true;
+    recognition.onstart=()=>{listening=true;$("mic").classList.add("active");state("Listening • voice detection is on")};
+    recognition.onresult=e=>{
+      let finalText="";
+      for(let i=e.resultIndex;i<e.results.length;i++){
+        const text=e.results[i][0].transcript.trim();
+        if(e.results[i].isFinal)finalText+=(" "+text);
+        else $("prompt").value=text;
+      }
+      if(finalText.trim()){
+        $("prompt").value="";
+        handleVoiceText(finalText.trim());
+      }
+    };
+    recognition.onerror=e=>{
+      listening=false;$("mic").classList.remove("active");
+      if(e.error!=="not-allowed"&&voiceMode)setTimeout(startVoice,700);
+      else state(e.error==="not-allowed"?"Microphone permission is required":"Voice paused");
+    };
+    recognition.onend=()=>{
+      listening=false;$("mic").classList.remove("active");
+      if(voiceMode)setTimeout(startVoice,250);
+    };
+  }
+  try{recognition.start()}catch{}
+}
 $("mic").onclick=()=>listening?stopVoice():startVoice();
 
 function actionCard(a){if(!a||a.type==="none")return;const d=document.createElement("div");d.className="actionCard";const labels={get_location:"Use my location",weather:"Check local weather",maps:"Open maps",search:"Search the web",food:"Find food",shopping:"Find shopping",booking:"Find booking options",vehicle:"Find vehicle help",call:"Make a call",sms:"Send SMS",whatsapp:"Open WhatsApp",email:"Prepare email",sos:"Emergency action"};d.innerHTML="<b>Hayagriva wants to "+(labels[a.type]||"take an action")+"</b><p>"+(a.query||"This action uses a connected device or external service.")+"</p>";const row=document.createElement("div");row.className="actionBtns";const yes=document.createElement("button");yes.className="confirm";yes.textContent=a.requires_confirmation?"Confirm":"Open";const no=document.createElement("button");no.className="cancel";no.textContent="Cancel";row.append(yes,no);d.append(row);$("messages").append(d);$("messages").scrollTop=$("messages").scrollHeight;yes.onclick=()=>{d.remove();runAction(a)};no.onclick=()=>{d.remove();addBubble("ai","Okay. I won't perform that action.");speak("Okay. I won't perform that action.")}}
@@ -112,7 +158,8 @@ $("prompt").addEventListener("input",()=>{$("chatForm").classList.toggle("up",$(
 
 function pick(kind){$("files").accept=kind==="image"?"image/*":kind==="video"?"video/*":".pdf,.txt,.doc,.docx";$("files").removeAttribute("capture");$("files").click()}
 $("photo").onclick=()=>pick("image");$("video").onclick=()=>pick("video");$("file").onclick=()=>pick("file");$("camera").onclick=()=>$("cameraInput").click();
-$("liveCamera").onclick=async()=>{try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false});$("cameraVideo").srcObject=cameraStream;$("cameraSheet").hidden=false}catch(e){const t="Camera permission is needed to use the camera.";addBubble("ai",t);speak(t)}};
+async function openLiveCamera(){try{cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"},audio:false});$("cameraVideo").srcObject=cameraStream;$("cameraSheet").hidden=false;state("Listening • camera is active")}catch(e){const t="Camera permission is needed to use the camera.";addBubble("ai",t);speak(t)}}
+$("liveCamera").onclick=openLiveCamera;
 $("closeCamera").onclick=()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;$("cameraVideo").srcObject=null;$("cameraSheet").hidden=true};
 $("takePhoto").onclick=()=>{const v=$("cameraVideo"),c=document.createElement("canvas");c.width=v.videoWidth||1280;c.height=v.videoHeight||720;c.getContext("2d").drawImage(v,0,0,c.width,c.height);c.toBlob(blob=>{const f=new File([blob],"hayagriva-camera.jpg",{type:"image/jpeg"});selectedFiles=[f];$("closeCamera").click();const t="Photo captured. What should I check in it?";addBubble("ai",t);speak(t)},"image/jpeg",.9)};
 $("files").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Attached "+selectedFiles.length+" file(s). Tell me what you want me to do with them.";addBubble("ai",t);speak(t)}};$("cameraInput").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Photo captured. What should I check in it?";addBubble("ai",t);speak(t)}};
@@ -128,7 +175,7 @@ document.addEventListener("pointermove",e=>{
 });
 $("prompt").addEventListener("focus",()=>state("Listening • ready to receive your message"));
 
-(async()=>{showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];history.push({role:"model",text:"Namaste. Main Hayagriva hoon."});window.history.replaceState(null,"",location.pathname);showApp();return}const s=saved();if(s){const f=await refresh(s);if(f)showApp()}})();
+(async()=>{showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];history.push({role:"model",text:"Namaste. Main Hayagriva hoon."});window.history.replaceState(null,"",location.pathname);showApp();setTimeout(startVoice,1200);return}const s=saved();if(s){const f=await refresh(s);if(f){showApp();setTimeout(startVoice,1200)}}})();
 </script>
 <noscript><div style="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui;text-align:center;padding:24px"><div><div style="font-size:28px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><p style="color:#91a0b4">Please enable JavaScript to use Hayagriva.</p></div></div></noscript></body>
 </html>
