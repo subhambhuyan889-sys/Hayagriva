@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
-<meta name="hayagriva-build" content="2026-09-28-3">
+<meta name="hayagriva-build" content="2026-09-28-4">
 <title>HAYAGRIVA — AI Action & Safety Companion • build 2026-09-28-1</title>
 <style>
 :root{--bg:#04060c;--panel:rgba(10,15,27,.82);--line:rgba(148,163,184,.16);--text:#f8fbff;--muted:#91a0b4;--cyan:#67e8f9;--violet:#9b87ff;--green:#61e7bb;--gold:#e7bd68;--danger:#ff6b7a}
@@ -23,7 +23,10 @@
 </section>
 
 <section id="app" class="app">
-<div class="topbar"><div class="productMark">HAYAGRIVA <span class="liveBadge">● LIVE</span></div><button id="logout" class="pill">Sign out</button></div>
+<div class="topbar"><div class="productMark">HAYAGRIVA <span class="liveBadge">● LIVE</span></div><div style="display:flex;gap:7px"><button id="permissions" class="pill">Permissions</button><button id="logout" class="pill">Sign out</button></div></div>
+<div id="permissionSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px"><h2 style="margin:4px 0 6px">Hayagriva Permissions</h2><p class="muted" style="margin-top:0">Hayagriva can request access only when you choose to allow it. Actions such as booking, calling or sending a message will ask for confirmation before they are performed.</p>
+<div id="permissionList" style="display:grid;gap:8px;margin-top:14px"></div>
+<div class="cameraActions"><button id="closePermissions" class="cancel">Close</button></div></div></div>
 
 <div class="stage">
 <main class="avatarCard card">
@@ -137,7 +140,45 @@ function startVoice(){
 }
 
 
-function actionCard(a){if(!a||a.type==="none")return;const d=document.createElement("div");d.className="actionCard";const labels={get_location:"Use my location",weather:"Check local weather",maps:"Open maps",search:"Search the web",food:"Find food",shopping:"Find shopping",booking:"Find booking options",vehicle:"Find vehicle help",call:"Make a call",sms:"Send SMS",whatsapp:"Open WhatsApp",email:"Prepare email",sos:"Emergency action"};d.innerHTML="<b>Hayagriva wants to "+(labels[a.type]||"take an action")+"</b><p>"+(a.query||"This action uses a connected device or external service.")+"</p>";const row=document.createElement("div");row.className="actionBtns";const yes=document.createElement("button");yes.className="confirm";yes.textContent=a.requires_confirmation?"Confirm":"Open";const no=document.createElement("button");no.className="cancel";no.textContent="Cancel";row.append(yes,no);d.append(row);$("messages").append(d);$("messages").scrollTop=$("messages").scrollHeight;yes.onclick=()=>{d.remove();runAction(a)};no.onclick=()=>{d.remove();addBubble("ai","Okay. I won't perform that action.");speak("Okay. I won't perform that action.")}}
+async function permissionState(name){
+  try{return await navigator.permissions.query({name})}catch{return null}
+}
+async function refreshPermissions(){
+  const rows=[
+    ["Microphone","microphone","Voice detection and voice commands."],
+    ["Camera","camera","Camera and live-camera requests."],
+    ["Location","geolocation","Maps, local weather and nearby services."],
+    ["Notifications","notifications","Optional Hayagriva notifications."],
+    ["Contacts","contacts","Not available through standard web permissions; requires a supported app/integration."]
+  ];
+  const box=$("permissionList");box.innerHTML="";
+  for(const [label,name,desc] of rows){
+    const row=document.createElement("div");row.className="permissionRow";
+    const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
+    const btn=document.createElement("button");btn.textContent="Check";
+    if(name==="contacts"){btn.textContent="Unavailable";btn.disabled=true;btn.className="blocked"}
+    else{
+      let st=await permissionState(name);
+      btn.textContent=st?st.state==="granted"?"Allowed":st.state==="denied"?"Blocked":"Allow":"Request";
+      if(st?.state==="granted")btn.className="allowed";
+      if(st?.state==="denied")btn.className="blocked";
+      btn.onclick=async()=>{
+        try{
+          if(name==="microphone")await navigator.mediaDevices.getUserMedia({audio:true});
+          else if(name==="camera")await navigator.mediaDevices.getUserMedia({video:true});
+          else if(name==="geolocation")await getPos();
+          else if(name==="notifications" && "Notification" in window)await Notification.requestPermission();
+          await refreshPermissions();
+        }catch{await refreshPermissions()}
+      };
+    }
+    row.append(info,btn);box.append(row);
+  }
+}
+$("permissions").onclick=async()=>{$("permissionSheet").hidden=false;await refreshPermissions()};
+$("closePermissions").onclick=()=>{$("permissionSheet").hidden=true};
+
+function actionCard(a){if(!a||a.type==="none")return;const d=document.createElement("div");d.className="actionCard";const labels={get_location:"Use my location",weather:"Check local weather",maps:"Open maps",search:"Search the web",food:"Find food",shopping:"Find shopping",booking:"Find booking options",vehicle:"Find vehicle help",call:"Make a call",sms:"Send SMS",whatsapp:"Open WhatsApp",email:"Prepare email",sos:"Emergency action"};d.innerHTML="<b>Hayagriva wants to "+(labels[a.type]||"take an action")+"</b><p>"+(a.type==="booking"?"I will open the relevant booking service with your request. Final booking/payment still requires the service and your confirmation.":(a.query||"This action uses a connected device or external service."))+"</p>";const row=document.createElement("div");row.className="actionBtns";const yes=document.createElement("button");yes.className="confirm";yes.textContent="Confirm";const no=document.createElement("button");no.className="cancel";no.textContent="Cancel";row.append(yes,no);d.append(row);$("messages").append(d);$("messages").scrollTop=$("messages").scrollHeight;yes.onclick=()=>{d.remove();runAction(a)};no.onclick=()=>{d.remove();addBubble("ai","Okay. I won't perform that action.");speak("Okay. I won't perform that action.")}}
 async function getPos(){return new Promise((res,rej)=>navigator.geolocation?navigator.geolocation.getCurrentPosition(res,rej,{enableHighAccuracy:true,timeout:10000}):rej(new Error("Location is not available in this browser.")))}
 async function runAction(a){try{state("Thinking • working on it");if(a.type==="get_location"){const p=await getPos();const q=p.coords.latitude+","+p.coords.longitude;const t="Your current coordinates are "+q+". I can open them in Maps if you want.";addBubble("ai",t);speak(t);window.open("https://www.google.com/maps?q="+encodeURIComponent(q),"_blank");return}
 if(a.type==="weather"){const p=await getPos();const u="https://api.open-meteo.com/v1/forecast?latitude="+p.coords.latitude+"&longitude="+p.coords.longitude+"&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m";const r=await fetch(u);const d=await r.json();const c=d.current;const t="Right now it is "+c.temperature_2m+" degrees Celsius, humidity "+c.relative_humidity_2m+" percent, with wind around "+c.wind_speed_10m+" kilometers per hour.";addBubble("ai",t);speak(t);return}
