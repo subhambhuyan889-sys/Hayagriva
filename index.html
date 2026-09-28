@@ -111,7 +111,7 @@
 </div></div>
 <div id="ownerVoiceSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px">
 <h2 style="margin:4px 0 6px">Owner Voice Lock</h2>
-<p class="muted" style="margin-top:0">Give Hayagriva two short voice samples. The voice profile stays on this device. Voice commands and actions are accepted only after the live voice matches the enrolled owner voice.</p>
+<p class="muted" style="margin-top:0">Give Hayagriva two short voice samples. The voice profile stays on this device. Normal chat is available to everyone. Only a matching enrolled owner voice can authorize protected actions.</p>
 <div id="ownerVoiceStatus" class="intentHint" style="font-size:11px;margin:14px 0">Not enrolled</div>
 <div class="cameraActions">
 <button id="enrollOwnerVoice" class="confirm">Record 2 voice samples</button>
@@ -160,7 +160,7 @@ const SESSION_KEY="hayagriva_session_v2";
 const $=id=>document.getElementById(id);
 let sending=false,voiceBusy=false,lastVoiceText="",lastVoiceAt=0;
 let session=null,signup=false,history=[],listening=false,recognition=null,selectedFiles=[],voiceMode=false,cameraStream=null,cameraFacing="environment";
-const OWNER_VOICE_KEY="hayagriva_owner_voice_v1";
+const OWNER_VOICE_KEY="hayagriva_owner_voice_v2";
 const OWNER_VOICE_THRESHOLD=0.88;
 let ownerVoiceProfile=null,voiceMonitorStream=null,voiceAudioContext=null,voiceAnalyser=null,voiceFeatureTimer=null,voiceFeatureHistory=[],ownerVoiceCapture=false,ownerVoiceSampleVectors=[],lockedSpeechVoice=null,ownerVerifiedUntil=0;
 function bootDone(){const b=$("bootFallback");if(b)b.style.display="none"}
@@ -201,7 +201,8 @@ function enforcePremium(){
 }
 function initTrial(){loadTrial();if(!premiumActive())showTrialSheet()}
 
-function loadOwnerVoice(){try{ownerVoiceProfile=JSON.parse(localStorage.getItem(OWNER_VOICE_KEY)||"null")}catch{ownerVoiceProfile=null}return ownerVoiceProfile}
+function ownerVoiceStorageKey(){return OWNER_VOICE_KEY+"_"+accountKey()}
+function loadOwnerVoice(){try{ownerVoiceProfile=JSON.parse(localStorage.getItem(ownerVoiceStorageKey())||"null")}catch{ownerVoiceProfile=null}return ownerVoiceProfile}
 function normalizeVoiceVector(v){const n=Math.sqrt(v.reduce((a,x)=>a+x*x,0))||1;return v.map(x=>x/n)}
 function meanVoiceVectors(vs){if(!vs.length)return null;const n=vs[0].length,out=new Array(n).fill(0);for(const v of vs)for(let i=0;i<n;i++)out[i]+=v[i];return normalizeVoiceVector(out.map(x=>x/vs.length))}
 function cosineVoice(a,b){if(!a||!b||a.length!==b.length)return 0;let dot=0,na=0,nb=0;for(let i=0;i<a.length;i++){dot+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return dot/(Math.sqrt(na*nb)||1)}
@@ -259,11 +260,11 @@ async function enrollOwnerVoice(){
   await new Promise(r=>setTimeout(r,450));
   if(!(await captureOwnerSample(2)))return;
   ownerVoiceProfile={version:1,vector:meanVoiceVectors(ownerVoiceSampleVectors),createdAt:Date.now()};
-  localStorage.setItem(OWNER_VOICE_KEY,JSON.stringify(ownerVoiceProfile));ownerVoiceSampleVectors=[];
-  updateOwnerVoiceUI();$("ownerVoiceStatus").textContent="Owner voice enrolled successfully. Only matching voice commands can run.";
+  localStorage.setItem(ownerVoiceStorageKey(),JSON.stringify(ownerVoiceProfile));ownerVoiceSampleVectors=[];
+  updateOwnerVoiceUI();$("ownerVoiceStatus").textContent="Owner voice enrolled successfully. Only the matching owner voice can authorize protected actions.";
   speak("Owner voice lock is ready. Ab sirf aapki awaaz se voice commands access hongi.");
 }
-function clearOwnerVoice(){ownerVoiceProfile=null;ownerVoiceSampleVectors=[];localStorage.removeItem(OWNER_VOICE_KEY);updateOwnerVoiceUI();$("ownerVoiceStatus").textContent="Owner voice cleared. Record two samples again."}
+function clearOwnerVoice(){ownerVoiceProfile=null;ownerVoiceSampleVectors=[];localStorage.removeItem(ownerVoiceStorageKey());updateOwnerVoiceUI();$("ownerVoiceStatus").textContent="Owner voice cleared. Record two samples again."}
 function save(s){session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY)}
 function saved(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
 function authMsg(t){$("authMsg").textContent=t||""}
