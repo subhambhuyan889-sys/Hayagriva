@@ -43,6 +43,43 @@
 .avatar.listening .eye:after{box-shadow:0 0 0 3px #7a5360,0 0 16px rgba(97,231,187,.55)}
 .avatar.thinking .eye:after{transform:translate(var(--gaze-x,0px),calc(var(--gaze-y,0px) - 1px)) scale(.94)}
 </style>
+<style>
+/* Hayagriva character refinement */
+.avatar{isolation:isolate}
+.avatarAura{position:absolute;left:55px;top:25px;width:280px;height:505px;border-radius:48%;background:radial-gradient(ellipse at 50% 38%,rgba(103,232,249,.11),transparent 58%);filter:blur(2px);z-index:0;transition:.3s}
+.head{overflow:visible!important}
+.head .ear{z-index:1}
+.head .hairBack{z-index:2}
+.head .face{z-index:6}
+.head .hairFront{z-index:7}
+.face .eye{top:101px;width:44px;height:30px}
+.face .eye.l{left:22px}.face .eye.r{right:22px}
+.face .eye:before{left:1px;top:3px;width:42px;height:24px}
+.face .eye:after{left:14px;top:6px;width:15px;height:15px}
+.face .brow{top:90px;width:42px}
+.face .brow.lb{left:21px}.face .brow.rb{right:21px}
+.face .blush{top:147px;width:34px}
+.face .blush.lb{left:9px}.face .blush.rb{right:9px}
+.face .nose{left:89px;top:124px}
+.face .tinyMouth{left:65px;top:174px;width:58px;height:17px}
+.head .hairBack{left:-28px;top:-28px;width:246px;height:315px}
+.head .hairFront{left:-5px;top:-24px;width:198px;height:132px}
+.head .ear.l{left:-12px;top:92px}.head .ear.r{right:-12px;top:92px}
+.avatar.listening .avatarAura{animation:avatarListen 1.35s ease-in-out infinite}
+.avatar.thinking .avatarAura{animation:avatarThink 1.1s ease-in-out infinite}
+.avatar.speaking .avatarAura{animation:avatarSpeak .7s ease-in-out infinite}
+.avatar.speaking .tinyMouth{animation:talk .11s infinite alternate}
+.avatar.speaking .head{animation:talkHead .9s ease-in-out infinite}
+.avatar.speaking .robe{animation:robeTalk .9s ease-in-out infinite}
+.avatar.speaking .crown{animation:crownTalk .9s ease-in-out infinite}
+.avatar.listening .head{animation:listenHead 2.4s ease-in-out infinite}
+@keyframes avatarListen{50%{transform:scale(1.05);opacity:.8}}
+@keyframes avatarThink{50%{transform:rotate(-1deg) scale(1.04);opacity:.85}}
+@keyframes avatarSpeak{50%{transform:scale(1.025);opacity:1}}
+@keyframes listenHead{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-1px) rotate(-.7deg)}}
+@keyframes robeTalk{50%{transform:translateY(-1px) scaleX(1.01)}}
+@keyframes crownTalk{50%{transform:translateY(-2px) rotate(-.8deg)}}
+</style>
 </head>
 <body>
 <div id="bootFallback" style="position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;padding:24px"><div><div style="font-size:30px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><div style="margin-top:10px;color:#67e8f9;font-size:13px">Starting securely…</div><div id="bootError" style="margin-top:12px;color:#ff9ba7;font-size:11px;max-width:320px"></div></div></div><div class="wrap">
@@ -56,16 +93,22 @@
 </section>
 
 <section id="app" class="app">
-<div class="topbar"><div class="productMark">HAYAGRIVA <span class="liveBadge">● LIVE</span></div><div style="display:flex;gap:7px"><button id="ownerVoice" class="pill">Owner Voice</button><button id="settings" class="pill">Settings</button><button id="permissions" class="pill">Permissions</button><button id="logout" class="pill">Sign out</button></div></div>
-<div id="settingsSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px">
-<h2 style="margin:4px 0 6px">Hayagriva Settings</h2>
-<p class="muted" style="margin-top:0">Control Hayagriva features separately. Turning a feature off prevents Hayagriva from using it until you enable it again.</p>
-<div id="settingsList" style="display:grid;gap:8px;margin-top:14px"></div>
-<div class="cameraActions"><button id="closeSettings" class="cancel" type="button">Close</button></div>
-</div></div>
-<div id="permissionSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px"><h2 style="margin:4px 0 6px">Hayagriva Permissions</h2><p class="muted" style="margin-top:0">Hayagriva can request access only when you choose to allow it. Actions such as booking, calling or sending a message will ask for confirmation before they are performed.</p>
+<div class="topbar"><div class="productMark">HAYAGRIVA <span class="liveBadge">● LIVE</span></div><div style="display:flex;gap:7px"><button id="ownerVoice" class="pill">Owner Voice</button><button id="permissions" class="pill">Settings &amp; Permissions</button><button id="logout" class="pill">Sign out</button></div></div>
+<div id="permissionSheet class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px"><h2 style="margin:4px 0 6px">Settings &amp; Permissions</h2><p class="muted" style="margin-top:0">Control Hayagriva features and device access from one place. Allowed items can be switched Off at any time.</p>
 <div id="permissionList" style="display:grid;gap:8px;margin-top:14px"></div>
 <div class="cameraActions"><button id="closePermissions" class="cancel">Close</button></div></div></div>
+<div id="trialSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:520px;text-align:center">
+<h2 style="margin:4px 0 8px">Hayagriva Premium</h2>
+<div id="trialTitle" style="font-size:20px;font-weight:900;color:var(--cyan)">15-day free trial</div>
+<p id="trialText" class="muted">Your free access is active.</p>
+<div style="display:grid;gap:8px;margin:18px 0;text-align:left">
+<div class="permissionRow"><div><b>Full AI assistant</b><small>Chat, voice, files, camera and AI actions.</small></div><span class="allowed" style="font-size:10px;font-weight:800">Included</span></div>
+<div class="permissionRow"><div><b>Monthly subscription</b><small>Continue after the free trial.</small></div><strong style="color:var(--gold)">₹999/month</strong></div>
+</div>
+<button id="subscribeBtn" class="confirm" style="width:100%;height:46px">Subscribe ₹999/month</button>
+<button id="trialClose" class="cancel" style="margin-top:8px;width:100%">Close</button>
+<div class="intentHint">Payment gateway must be connected before a real charge can be processed.</div>
+</div></div>
 <div id="ownerVoiceSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px">
 <h2 style="margin:4px 0 6px">Owner Voice Lock</h2>
 <p class="muted" style="margin-top:0">Give Hayagriva two short voice samples. The voice profile stays on this device. Voice commands and actions are accepted only after the live voice matches the enrolled owner voice.</p>
@@ -80,7 +123,21 @@
 <main class="avatarCard card">
 <div class="avatarGlow"></div>
 <div id="avatar" class="avatar listening">
-<div class="plushBody"></div><div class="robe"></div><div class="head"></div><div class="face"><div class="eye l blink"></div><div class="eye r blink"></div><div class="blush lb"></div><div class="blush rb"></div><div class="tinyMouth"></div></div><div class="crown"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="sandals"><span></span><span></span></div>
+<div class="avatarAura"></div>
+<div class="plushBody"></div><div class="robe"></div>
+<div class="head">
+  <div class="ear l"></div><div class="ear r"></div>
+  <div class="hairBack"></div><div class="hairFront"></div>
+  <div class="face">
+    <div class="brow lb"></div><div class="brow rb"></div>
+    <div class="eye l blink"><span></span></div><div class="eye r blink"><span></span></div>
+    <div class="blush lb"></div><div class="blush rb"></div>
+    <div class="nose"></div><div class="tinyMouth"></div>
+  </div>
+</div>
+<div class="neck"></div>
+<div class="crown"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<div class="sandals"><span></span><span></span></div>
 </div>
 <div class="avatarLabel"><div class="avatarName">HAYAGRIVA</div><div id="avatarState" class="avatarState">AI detection • waiting</div><div id="mic" class="mic" role="status" aria-label="Automatic voice detection active">🎙️</div></div>
 </main>
@@ -118,6 +175,31 @@ function appPerms(){try{return {...APP_PERM_DEFAULTS,...JSON.parse(localStorage.
 function setAppPerm(k,v){const p=appPerms();p[k]=v;localStorage.setItem(APP_PERMS_KEY,JSON.stringify(p))}
 function permKey(type){return {get_location:"location",weather:"location",maps:"location",food:"location",booking:"booking",vehicle:"booking",call:"call",sms:"sms",whatsapp:"whatsapp",instagram:"social",facebook:"social",youtube:"social",social_post:"social"}[type]||null}
 
+
+
+const TRIAL_DAYS=15,TRIAL_KEY="hayagriva_trial_v2",SUBSCRIPTION_PRICE=999;
+let trialRecord=null;
+function accountKey(){return session?.user?.id||session?.user?.email||"local-user"}
+function loadTrial(){
+  try{trialRecord=JSON.parse(localStorage.getItem(TRIAL_KEY+"_"+accountKey())||"null")}catch{trialRecord=null}
+  if(!trialRecord){trialRecord={startedAt:Date.now(),paid:false};localStorage.setItem(TRIAL_KEY+"_"+accountKey(),JSON.stringify(trialRecord))}
+  return trialRecord
+}
+function trialDaysLeft(){
+  const t=loadTrial(); if(t.paid)return Infinity;
+  return Math.max(0,Math.ceil((t.startedAt+TRIAL_DAYS*86400000-Date.now())/86400000))
+}
+function premiumActive(){return !!loadTrial().paid||trialDaysLeft()>0}
+function showTrialSheet(){
+  const days=trialDaysLeft(),sh=$("trialSheet");if(!sh)return;
+  if(premiumActive()&&days>0){$("trialTitle").textContent=days+" day"+(days===1?"":"s")+" left in your free trial";$("trialText").textContent="Full Hayagriva access is active.";sh.hidden=false}
+  else{$("trialTitle").textContent="Your free trial has ended";$("trialText").textContent="Hayagriva is now locked. Subscribe for ₹999/month to continue.";sh.hidden=false;stopVoice()}
+}
+function enforcePremium(){
+  if(premiumActive())return true;
+  showTrialSheet();return false;
+}
+function initTrial(){loadTrial();if(!premiumActive())showTrialSheet()}
 
 function loadOwnerVoice(){try{ownerVoiceProfile=JSON.parse(localStorage.getItem(OWNER_VOICE_KEY)||"null")}catch{ownerVoiceProfile=null}return ownerVoiceProfile}
 function normalizeVoiceVector(v){const n=Math.sqrt(v.reduce((a,x)=>a+x*x,0))||1;return v.map(x=>x/n)}
@@ -185,7 +267,7 @@ function clearOwnerVoice(){ownerVoiceProfile=null;ownerVoiceSampleVectors=[];loc
 function save(s){session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY)}
 function saved(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
 function authMsg(t){$("authMsg").textContent=t||""}
-function showApp(){ $("auth").style.display="none";$("app").style.display="block" }
+function showApp(){ $("auth").style.display="none";$("app").style.display="block";initTrial() }
 function showAuth(){ $("auth").style.display="block";$("app").style.display="none" }
 async function authFetch(path,body){const r=await fetch(SUPABASE_URL+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+KEY},body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.msg||d.error_description||d.message||d.error||"Request failed");return d}
 async function refresh(s){try{const d=await authFetch("/auth/v1/token?grant_type=refresh_token",{refresh_token:s.refresh_token});save(d);return d}catch{save(null);return null}}
@@ -207,7 +289,11 @@ $("google").onclick=async()=>{
   }finally{btn.disabled=false}
 }
 $("switch").onclick=()=>{signup=!signup;$("name").style.display=signup?"block":"none";$("nameLabel").style.display=signup?"block":"none";$("name").required=signup;$("authBtn").textContent=signup?"Create account":"Sign in securely";$("switchText").textContent=signup?"Already have an account?":"New to Hayagriva?";$("switch").textContent=signup?"Sign in":"Create account";authMsg("")}
-$("authForm").onsubmit=async e=>{e.preventDefault();$("authBtn").disabled=true;authMsg("");try{let d;if(signup)d=await authFetch("/auth/v1/signup",{email:$("email").value.trim(),password:$("password").value,data:{display_name:$("name").value.trim()}});else d=await authFetch("/auth/v1/token?grant_type=password",{email:$("email").value.trim(),password:$("password").value});if(!d.access_token){authMsg("Account created. Check your email, then sign in.");return}save(d);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200)}catch(err){authMsg(err.message||"Please try again")}finally{$("authBtn").disabled=false}}
+$("authForm").onsubmit=async e=>{e.preventDefault();$("authBtn").disabled=true;authMsg("");try{let d;if(signup)d=await authFetch("/auth/v1/signup",{email:$("email").value.trim(),password:$("password").value,data:{display_name:$("name").value.trim()}});else d=await authFetch("/auth/v1/token?grant_type=password",{email:$("email").value.trim(),password:$("password").value});if(!d.access_token){authMsg("Account created. Check your email, then sign in.");return}save(d);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},900)}catch(err){authMsg(err.message||"Please try again")}finally{$("authBtn").disabled=false}}
+$("subscribeBtn").onclick=()=>{
+  alert("₹999/month subscription is ready in the Hayagriva UI. Connect your Razorpay/other payment link or backend here before accepting real payments.");
+};
+$("trialClose").onclick=()=>{$("trialSheet").hidden=true};
 $("logout").onclick=()=>{stopVoice();stopVoiceMonitor();if(currentAudio)try{currentAudio.pause()}catch{}save(null);history=[];showAuth()}
 
 function addBubble(role,text){return;}
@@ -240,65 +326,47 @@ function fallbackSpeak(t){
 function stopVoice(){voiceMode=false;if(recognition)try{recognition.stop()}catch{}listening=false;$("mic").classList.remove("active");state(ownerVoiceProfile?"Voice paused • owner protected":"Voice locked • enroll owner voice first")}
 function handleVoiceText(t){
   t=(t||"").trim();if(!t||sending||voiceBusy)return;
+  if(!enforcePremium())return;
   const now=Date.now();if(t===lastVoiceText&&now-lastVoiceAt<3500)return;
   lastVoiceText=t;lastVoiceAt=now;voiceBusy=true;if(recognition)try{recognition.stop()}catch{}
-  if(!ownerVoiceProfile){voiceBusy=false;openOwnerVoice();speak("Pehle owner voice setup karo. Do short samples dene hain.");return}
-  const score=voiceMatchScore();
-  if(score<OWNER_VOICE_THRESHOLD){voiceBusy=false;state("Voice rejected • owner voice only");speak("Sorry. Ye voice owner voice se match nahi hui. Voice commands locked hain.");if(voiceMode&&!listening)setTimeout(startVoice,900);return}
-  ownerVerifiedUntil=Date.now()+30000;
-  const low=t.toLowerCase();
-  if(/(?:camera|कैमरा).*(?:open|start|खोल|चालू)|(?:open|start|खोल|चालू).*(?:camera|कैमरा)/i.test(low)){openLiveCamera();speak("Camera permission is needed. Please allow it when your browser asks.");voiceBusy=false;return}
-  $("prompt").value=t;$("chatForm").requestSubmit();
+  let owner=false;
+  if(ownerVoiceProfile){
+    const score=voiceMatchScore();
+    owner=score>=OWNER_VOICE_THRESHOLD;
+    ownerVerifiedUntil=owner?Date.now()+60000:0;
+  }
+  $("prompt").value=t;
+  $("chatForm").requestSubmit();
+  // The AI chat is available to every user. Only owner-matched speech receives owner-action authority.
+  if(!owner)state("Listening • normal user mode");
 }
 function startVoice(){
-  if(!featurePrefs().voiceDetection){voiceMode=false;return}
+  if(!featurePrefs().voiceDetection){voiceMode=false;state("Voice detection • Off");return}
+  if(appPerms().mic===false){voiceMode=false;state("Microphone access • Off");return}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;voiceMode=true;
   if(!ownerVoiceProfile){state("Voice locked • enroll owner voice first");return}
   startVoiceMonitor();if(!SR){speak("Voice input is not supported in this browser.");return}
   if(listening)return;
   if(!recognition){
-    recognition=new SR();recognition.lang="hi-IN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=1;
+    recognition=new SR();recognition.lang="hi-IN";recognition.interimResults=true;try{if("processLocally" in recognition)recognition.processLocally=true}catch{}recognition.continuous=true;recognition.maxAlternatives=1;
     recognition.onstart=()=>{listening=true;$("mic").classList.add("active");state("Listening • owner voice detection is on")};
     recognition.onresult=e=>{let finalText="";for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(" "+text);else $("prompt").value=text}if(finalText.trim()){$("prompt").value="";handleVoiceText(finalText.trim())}};
     recognition.onerror=e=>{listening=false;$("mic").classList.remove("active");if(e.error!=="not-allowed"&&voiceMode&&!sending&&!voiceBusy)setTimeout(startVoice,700);else state(e.error==="not-allowed"?"Microphone permission is required":"Voice paused")};
     recognition.onend=()=>{listening=false;$("mic").classList.remove("active");if(voiceMode&&!sending&&!voiceBusy)setTimeout(startVoice,650)};
   }
-  try{const tr=voiceMonitorStream?.getAudioTracks?.()[0];if(tr)recognition.start(tr);else recognition.start()}catch{try{recognition.start()}catch{}}
+  try{recognition.start()}catch{try{const tr=voiceMonitorStream?.getAudioTracks?.()[0];if(tr)recognition.start(tr)}catch{}}
 }
 $("ownerVoice").onclick=openOwnerVoice;
 $("closeOwnerVoice").onclick=closeOwnerVoice;
 $("enrollOwnerVoice").onclick=async()=>{const b=$("enrollOwnerVoice");b.disabled=true;try{await enrollOwnerVoice()}finally{b.disabled=false}};
 $("clearOwnerVoice").onclick=clearOwnerVoice;
 
-function refreshSettings(){
-  const p=featurePrefs(),box=$("settingsList"); if(!box)return;
-  const rows=[
-    ["Voice detection","Automatically listen for the owner's voice.", "voiceDetection"],
-    ["Live camera","Allow the Live Camera feature to start the camera.", "liveCamera"],
-    ["AI actions","Allow Hayagriva to perform approved device/web actions.", "aiActions"],
-    ["Voice responses","Allow Hayagriva to speak replies aloud.", "voiceResponses"]
-  ];
-  box.innerHTML="";
-  for(const [label,desc,key] of rows){
-    const row=document.createElement("div");row.className="permissionRow";
-    const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
-    const btn=document.createElement("button");btn.type="button";btn.textContent=p[key]?"Allowed":"Off";btn.className=p[key]?"allowed":"blocked";
-    btn.onclick=()=>{
-      setFeature(key,!featurePrefs()[key]);refreshSettings();
-      if(key==="voiceDetection"&&!featurePrefs().voiceDetection)stopVoice();
-      if(key==="voiceDetection"&&featurePrefs().voiceDetection&&ownerVoiceProfile)startVoice();
-    };
-    row.append(info,btn);box.append(row);
-  }
-}
-$("settings").onclick=()=>{$("settingsSheet").hidden=false;refreshSettings()};
-$("closeSettings").onclick=()=>{$("settingsSheet").hidden=true};
-
 async function permissionState(name){
   try{return await navigator.permissions.query({name})}catch{return null}
 }
 async function refreshPermissions(){
   const rows=[
+
     ["Microphone","microphone","Voice detection and voice commands.","mic"],
     ["Camera","camera","Live camera and photo capture.","camera"],
     ["Location","geolocation","Maps, local weather and nearby services.","location"],
@@ -312,6 +380,21 @@ async function refreshPermissions(){
     ["Bookings","app","Allow booking/vehicle action handoffs.","booking"]
   ];
   const box=$("permissionList");box.innerHTML="";const p=appPerms();
+  const fp=featurePrefs();
+  const featureRows=[
+    ["Voice detection","Automatically listen for speech. Only owner voice can authorize actions.","voiceDetection"],
+    ["Live camera","Allow the Live Camera feature.","liveCamera"],
+    ["AI actions","Allow owner-authorized AI actions.","aiActions"],
+    ["Voice responses","Allow Hayagriva to speak replies aloud.","voiceResponses"]
+  ];
+  for(const [label,desc,key] of featureRows){
+    const row=document.createElement("div");row.className="permissionRow";
+    const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
+    const btn=document.createElement("button");btn.textContent=fp[key]?"Allowed":"Off";btn.className=fp[key]?"allowed":"blocked";
+    btn.onclick=()=>{setFeature(key,!featurePrefs()[key]);refreshPermissions();if(key==="voiceDetection"&&!featurePrefs().voiceDetection)stopVoice();if(key==="voiceDetection"&&featurePrefs().voiceDetection&&ownerVoiceProfile)startVoice()};
+    row.append(info,btn);box.append(row);
+  }
+  const divider=document.createElement("div");divider.className="intentHint";divider.textContent="Device permissions";box.append(divider);
   for(const [label,name,desc,key] of rows){
     const row=document.createElement("div");row.className="permissionRow";
     const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
@@ -357,13 +440,14 @@ async function refreshPermissions(){
   }
   const note=document.createElement("div");note.className="intentHint";note.textContent="Browser/OS permissions are controlled by your device. Hayagriva also respects these app-level switches.";box.append(note);
 }
-$("permissions").onclick=async()=>{$("permissionSheet").hidden=false;await refreshPermissions()};
+$("permissions").onclick=async()=>{if(!enforcePremium())return;$("permissionSheet").hidden=false;await refreshPermissions()};
 $("closePermissions").onclick=()=>{$("permissionSheet").hidden=true};
 
 function actionCard(a){
   if(!a||a.type==="none")return;
+  if(!enforcePremium())return;
   if(!featurePrefs().aiActions){speak("AI Actions are turned off in Settings.");return}
-  if(Date.now()>ownerVerifiedUntil){speak("Voice verification is required before I can perform an action.");return}const pk=permKey(a.type);if(pk&&appPerms()[pk]===false){speak("That action is disabled in Hayagriva Permissions.");return}
+  if(Date.now()>ownerVerifiedUntil){speak("This action is available only after owner voice verification.");return}const pk=permKey(a.type);if(pk&&appPerms()[pk]===false){speak("That action is disabled in Hayagriva Permissions.");return}
   const labels={get_location:"use your location",weather:"check local weather",maps:"open maps",search:"search the web",food:"find food",shopping:"find shopping",booking:"find booking options",vehicle:"find vehicle help",call:"make a call",sms:"send an SMS",whatsapp:"open WhatsApp",email:"prepare an email",sos:"start the emergency action"};
   const ok=window.confirm("Hayagriva wants to "+(labels[a.type]||"take an action")+" .\n\n"+(a.query||"This action")+"\n\nContinue?");
   if(ok)runAction(a);else speak("Okay. I won't perform that action.");
@@ -399,6 +483,7 @@ function detectLocalAction(message){
   return null;
 }
 async function sendMessage(message){
+  if(!enforcePremium())return;
   if(!message||sending)return;
   sending=true;
   if(recognition)try{recognition.stop()}catch{}
@@ -427,6 +512,7 @@ $("prompt").addEventListener("input",()=>{$("chatForm").classList.toggle("up",$(
 function pick(kind){$("files").accept=kind==="image"?"image/*":kind==="video"?"video/*":".pdf,.txt,.doc,.docx";$("files").removeAttribute("capture");$("files").click()}
 $("photo").onclick=()=>pick("image");$("video").onclick=()=>pick("video");$("file").onclick=()=>pick("file");$("camera").onclick=()=>$("cameraInput").click();
 async function openLiveCamera(){
+  if(!enforcePremium())return;
   if(!featurePrefs().liveCamera){const t="Live Camera is turned off in Settings.";addBubble("ai",t);return}
   if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
   try{
