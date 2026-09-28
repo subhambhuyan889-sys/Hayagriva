@@ -313,13 +313,8 @@ async function refreshPermissions(){
       btn.className=supported?(p.contacts?"allowed":"blocked"):"";
       btn.disabled=!supported;
       btn.onclick=async()=>{
-        try{
-          if(!p.contacts)return;
-          const props=["name","tel","email"];
-          const opts={multiple:false};
-          await navigator.contacts.select(props,opts);
-          setAppPerm("contacts",true);
-        }catch{}
+        if(!appPerms().contacts){setAppPerm("contacts",true);refreshPermissions();return}
+        try{await navigator.contacts.select(["name","tel","email"],{multiple:false})}catch{}
         finally{await refreshPermissions()}
       };
       row.append(info,btn);box.append(row);continue
@@ -328,17 +323,25 @@ async function refreshPermissions(){
       btn.textContent=p[key]?"Allowed":"Off";btn.className=p[key]?"allowed":"blocked";
       btn.onclick=()=>{setAppPerm(key,!appPerms()[key]);refreshPermissions()};
     }else{
-      let st=await permissionState(name);
-      btn.textContent=st?st.state==="granted"?"Allowed":st.state==="denied"?"Blocked":"Request":"Request";
-      if(st?.state==="granted")btn.className="allowed";if(st?.state==="denied")btn.className="blocked";
+      const st=await permissionState(name);
+      const browserState=st?.state||"unknown";
+      const appAllowed=!!p[key];
+      btn.textContent=appAllowed?"Allowed":"Off";
+      btn.className=appAllowed?"allowed":"blocked";
+      btn.title="Browser permission: "+browserState+". Hayagriva app access: "+(appAllowed?"Allowed":"Off");
       btn.onclick=async()=>{
+        const now=appPerms()[key];
+        if(now){setAppPerm(key,false);await refreshPermissions();return}
         try{
           if(name==="microphone")await navigator.mediaDevices.getUserMedia({audio:true});
           else if(name==="camera")await navigator.mediaDevices.getUserMedia({video:true});
           else if(name==="geolocation")await getPos();
           else if(name==="notifications"&&"Notification"in window)await Notification.requestPermission();
-          if(key==="mic"||key==="camera"||key==="location")setAppPerm(key,true);
-        }catch{} finally{await refreshPermissions()}
+          setAppPerm(key,true);
+        }catch{
+          // Keep app access off when the browser/OS rejects the request.
+          setAppPerm(key,false);
+        }finally{await refreshPermissions()}
       };
     }
     row.append(info,btn);box.append(row);
