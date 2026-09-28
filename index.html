@@ -438,7 +438,7 @@ async function refreshPermissions(){
   }
   const note=document.createElement("div");note.className="intentHint";note.textContent="Browser/OS permissions are controlled by your device. Hayagriva also respects these app-level switches.";box.append(note);
 }
-$("permissions").onclick=async()=>{if(!enforcePremium())return;$("permissionSheet").hidden=false;await refreshPermissions()};
+$("permissions").onclick=async()=>{$("permissionSheet").hidden=false;await refreshPermissions()};
 $("closePermissions").onclick=()=>{$("permissionSheet").hidden=true};
 
 function actionCard(a){
@@ -480,7 +480,6 @@ function detectLocalAction(message){
   return null;
 }
 async function sendMessage(message){
-  if(!enforcePremium())return;
   if(!message||sending)return;
   sending=true;
   if(recognition)try{recognition.stop()}catch{}
@@ -509,7 +508,6 @@ $("prompt").addEventListener("input",()=>{$("chatForm").classList.toggle("up",$(
 function pick(kind){$("files").accept=kind==="image"?"image/*":kind==="video"?"video/*":".pdf,.txt,.doc,.docx";$("files").removeAttribute("capture");$("files").click()}
 $("photo").onclick=()=>pick("image");$("video").onclick=()=>pick("video");$("file").onclick=()=>pick("file");$("camera").onclick=()=>$("cameraInput").click();
 async function openLiveCamera(){
-  if(!enforcePremium())return;
   if(!featurePrefs().liveCamera){const t="Live Camera is turned off in Settings.";addBubble("ai",t);return}
   if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
   try{
@@ -562,11 +560,10 @@ function mindnessBubble(role,text){
   const box=$("mindnessMessages");if(!box)return;
   const d=document.createElement("div");d.className="bubble "+(role==="user"?"user":"ai");d.style.display="block";d.textContent=text;box.append(d);box.scrollTop=box.scrollHeight;
 }
-$("mindness").onclick=()=>{if(!enforcePremium())return;$("mindnessSheet").hidden=false};
+$("mindness").onclick=()=>{$("mindnessSheet").hidden=false};
 $("closeMindness").onclick=()=>{$("mindnessSheet").hidden=true};
 $("mindnessForm").onsubmit=async e=>{
- e.preventDefault();if(!enforcePremium())return;
- const input=$("mindnessPrompt"),m=input.value.trim();if(!m||sending)return;input.value="";
+ e.preventDefault();const input=$("mindnessPrompt"),m=input.value.trim();if(!m||sending)return;input.value="";
  mindnessBubble("user",m);state("Thinking • Mindness is working");
  try{
   const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai?ts="+Date.now(),{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"x-client-info":"hayagriva-mindness"},body:JSON.stringify({message:"Mindness mode: respond as a calm, supportive mindset and reflection assistant. User says: "+m,history:mindnessHistory,attachments:[],audio:false})});
