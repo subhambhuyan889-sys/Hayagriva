@@ -375,7 +375,8 @@ async function startVoice(){
   if(!featurePrefs().voiceDetection){voiceMode=false;state("Voice detection • Off");return}
   if(appPerms().mic===false){voiceMode=false;state("Microphone access • Off");return}
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;voiceMode=true;
-  if(!ownerVoiceProfile){state("Listening • normal voice chat (owner actions locked)")}\n  if(!SR){speak("Voice input is not supported in this browser.");return}
+  if(!ownerVoiceProfile){state("Listening • normal voice chat (owner actions locked)")}
+  if(!SR){speak("Voice input is not supported in this browser.");return}
   if(listening)return;
   if(!recognition){
     recognition=new SR();recognition.lang="en-IN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=1;
