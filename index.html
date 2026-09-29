@@ -398,31 +398,34 @@ function pickVoice(lang){
   lockedSpeechVoice=vs.find(v=>names.some(x=>(v.lang||"").includes(x)||(v.name||"").includes(x)))||vs[0]||null;
   return lockedSpeechVoice;
 }
+function audioToWav(b64,mime){
+  if(!b64)return "";
+  if(/wav/i.test(mime||""))return "data:"+mime+";base64,"+b64;
+  const raw=atob(b64),pcm=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)pcm[i]=raw.charCodeAt(i);
+  const rate=24000,bytes=pcm.length,buf=new ArrayBuffer(44+bytes),v=new DataView(buf),w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i))};
+  w(0,"RIFF");v.setUint32(4,36+bytes,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,bytes,true);new Uint8Array(buf,44).set(pcm);
+  let s="";for(let i=0;i<buf.byteLength;i+=0x8000)s+=String.fromCharCode(...new Uint8Array(buf,i,Math.min(0x8000,buf.byteLength-i)));
+  return "data:audio/wav;base64,"+btoa(s);
+}
 function speak(t,audioB64,audioMime){
   if(!t||!featurePrefs().voiceResponses)return;
-  if("speechSynthesis"in window)try{speechSynthesis.cancel()}catch{}
-  if(currentAudio){try{currentAudio.pause()}catch{}currentAudio=null}
-  if(audioB64){
-    try{
-      const mime=audioMime||"audio/wav";
-      currentAudio=new Audio("data:"+mime+";base64,"+audioB64);
-      currentAudio.onplay=()=>state("Speaking • Hayagriva is talking");
-      currentAudio.onended=()=>{currentAudio=null;state("Listening • owner voice ready");if(voiceMode&&!listening&&!sending)setTimeout(startVoice,450)};
-      currentAudio.onerror=()=>{currentAudio=null;fallbackSpeak(t)};
-      currentAudio.play().catch(()=>{currentAudio=null;fallbackSpeak(t)});
-      return;
-    }catch{}
-  }
+  try{speechSynthesis.cancel()}catch{}if(currentAudio)try{currentAudio.pause()}catch{}
+  currentAudio=null;
+  if(audioB64)try{
+    currentAudio=new Audio(audioToWav(audioB64,audioMime||"audio/wav"));currentAudio.volume=1;
+    currentAudio.onplay=()=>state("Speaking • Doraemon is talking");
+    currentAudio.onended=()=>{currentAudio=null;state("Listening • Doraemon ready")};
+    currentAudio.onerror=()=>{currentAudio=null;fallbackSpeak(t)};
+    const p=currentAudio.play();if(p?.catch)p.catch(()=>{currentAudio=null;fallbackSpeak(t)});
+    return;
+  }catch{}
   fallbackSpeak(t);
 }
 function fallbackSpeak(t){
-  if(!("speechSynthesis"in window)||!t){state("Listening • voice output unavailable");return}
+  if(!("speechSynthesis"in window)){state("Listening • voice output unavailable");return}
   try{speechSynthesis.cancel()}catch{}
-  const u=new SpeechSynthesisUtterance(t);u.lang=/[\\u0900-\\u097F]/.test(t)?"hi-IN":"en-IN";u.voice=pickVoice(u.lang);u.rate=.82;u.pitch=1.38;u.volume=1;
-  u.onstart=()=>state("Speaking • Hayagriva is talking");
-  u.onend=()=>{state("Listening • owner voice ready");if(voiceMode&&!listening&&!sending)setTimeout(startVoice,450)};
-  u.onerror=()=>state("Listening • voice output unavailable");
-  speechSynthesis.speak(u);
+  const go=()=>{const vs=speechSynthesis.getVoices(),u=new SpeechSynthesisUtterance(t);u.lang=/[\\u0900-\\u097F]/.test(t)?"hi-IN":"en-IN";u.voice=vs.find(v=>/hi-IN|en-IN/i.test(v.lang||""))||vs.find(v=>/Hindi|India/i.test(v.name||""))||vs[0]||null;u.rate=.78;u.pitch=1.55;u.volume=1;u.onstart=()=>state("Speaking • Doraemon is talking");u.onend=()=>state("Listening • Doraemon ready");u.onerror=()=>state("Listening • voice output unavailable");speechSynthesis.speak(u)};
+  if(speechSynthesis.getVoices().length)go();else setTimeout(go,300);
 }
 function stopVoice(){voiceMode=false;if(recognition)try{recognition.stop()}catch{}listening=false;$("mic").classList.remove("active");state(ownerVoiceProfile?"Voice paused • owner protected":"Voice locked • enroll owner voice first")}
 function handleVoiceText(t){
