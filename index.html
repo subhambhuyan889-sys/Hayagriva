@@ -626,7 +626,7 @@ if(SB_CLIENT){
 data=d;
 }finally{clearTimeout(timer)}
 }catch(e){throw e}
-if(!data)throw new Error("Hayagriva did not respond");const reply=data.reply||data.text||"I'm here. Tell me what you need.";addBubble("ai",reply);history.push({role:"user",text:message},{role:"model",text:reply});history=history.slice(-20);selectedFiles=[];$("files").value="";speak(reply,data.audio,data.audio_mime);const characterAction=detectCharacterAction(message);if(characterAction)performCharacterAction(characterAction);const localAction=detectLocalAction(message);if(data.action?.type&&data.action.type!=="none")actionCard(data.action);else if(localAction)actionCard(localAction)}
+if(!data)throw new Error("Hayagriva did not respond");let reply=data.reply||data.text||"I'm here. Tell me what you need.";if(/who are you|what is your name|your name|कौन हो|नाम क्या|तुम कौन|तुम्हारा नाम/i.test(message))reply="Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.";addBubble("ai",reply);history.push({role:"user",text:message},{role:"model",text:reply});history=history.slice(-20);selectedFiles=[];$("files").value="";speak(reply,data.audio,data.audio_mime);const characterAction=detectCharacterAction(message);if(characterAction)performCharacterAction(characterAction);const localAction=detectLocalAction(message);if(data.action?.type&&data.action.type!=="none")actionCard(data.action);else if(localAction)actionCard(localAction)}
 $("chatForm").onsubmit=async e=>{
   e.preventDefault();
   const m=$("prompt").value.trim();$("prompt").value="";$("chatForm")?.classList.remove("up");
