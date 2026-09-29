@@ -222,7 +222,7 @@
 <div class="composerWrap">
 
 <form id="chatForm" class="composer"><textarea id="prompt" rows="1" required placeholder="Speak or type to Hayagriva…"></textarea><button class="send">Send</button></form>
-<div class="inputTools"><button type="button" class="mini" id="photo">🖼️ Gallery</button><button type="button" class="mini" id="video">🎥 Video</button><button type="button" class="mini" id="file">📄 Document</button><button type="button" class="mini" id="camera">📸 Camera</button><button type="button" class="mini" id="liveCamera">🎥 Live camera</button><button type="button" class="mini" id="mindness">🧠 Mindness</button><input id="files" type="file" multiple hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div id="cameraSheet" class="cameraSheet" hidden><div class="cameraBox"><video id="cameraVideo" autoplay playsinline></video><div class="cameraActions"><button id="flipCamera" class="pill" type="button">↔ Front camera</button><button id="takePhoto" class="confirm" type="button">Capture</button><button id="closeCamera" class="cancel" type="button">Close</button></div></div></div></div>
+<div class="inputTools"><button type="button" class="mini" id="photo">🖼️ Gallery</button><button type="button" class="mini" id="video">🎥 Video</button><button type="button" class="mini" id="file">📄 Document</button><button type="button" class="mini" id="camera">📸 Camera</button><button type="button" class="mini" id="liveCamera">🎥 Live camera</button><button type="button" class="mini" id="voiceTest">🔊 Voice test</button><button type="button" class="mini" id="mindness">🧠 Mindness</button><input id="files" type="file" multiple hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div id="cameraSheet" class="cameraSheet" hidden><div class="cameraBox"><video id="cameraVideo" autoplay playsinline></video><div class="cameraActions"><button id="flipCamera" class="pill" type="button">↔ Front camera</button><button id="takePhoto" class="confirm" type="button">Capture</button><button id="closeCamera" class="cancel" type="button">Close</button></div></div></div></div>
 </div>
 </div>
 </section>
@@ -647,7 +647,7 @@ async function openLiveCamera(){
     addBubble("ai",t);speak(t);
   }
 }
-$("liveCamera").onclick=openLiveCamera;
+$("liveCamera").onclick=openLiveCamera;\n$("voiceTest").onclick=()=>speak("Namaste! Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.");
 $("flipCamera").onclick=async()=>{
   if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
   cameraFacing=cameraFacing==="environment"?"user":"environment";
