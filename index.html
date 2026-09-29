@@ -163,6 +163,16 @@
 @keyframes doraWave2{50%{transform:rotate(-55deg) translate(-8px,-20px)}}
 @keyframes doraLaugh2{50%{transform:rotate(3deg) scale(1.04)}}
 @media(max-width:560px){#avatar.doraemon{transform:scale(.68)!important;transform-origin:50% 0!important;margin:-10px 0 -65px!important}}
+</style><style id="doraemon-actions-v28">
+#avatar.doraemon.spin{animation:doraSpin3 .75s ease-in-out 2!important}
+#avatar.doraemon.clap .doraArm.left{animation:doraClapL3 .28s ease-in-out 6!important}
+#avatar.doraemon.clap .doraArm.right{animation:doraClapR3 .28s ease-in-out 6!important}
+#avatar.doraemon.sleep .doraEye{transform:scaleY(.08)!important;transform-origin:center}
+#avatar.doraemon.surprise{animation:doraSurprise3 .35s ease-in-out 4!important}
+@keyframes doraSpin3{50%{transform:rotateY(180deg) scale(1.02)}}
+@keyframes doraClapL3{50%{transform:translateX(34px) rotate(18deg)}}
+@keyframes doraClapR3{50%{transform:translateX(-34px) rotate(-18deg)}}
+@keyframes doraSurprise3{50%{transform:scale(1.06) translateY(-4px)}}
 </style></head>
 <body>
 <div id="bootFallback" style="position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;padding:24px"><div><div style="font-size:30px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><div style="margin-top:10px;color:#67e8f9;font-size:13px">Starting securely…</div><div id="bootError" style="margin-top:12px;color:#ff9ba7;font-size:11px;max-width:320px"></div></div></div><div class="wrap">
@@ -708,7 +718,7 @@ function performCharacterAction(kind){
 }
 function detectCharacterAction(message){
   const l=(message||"").toLowerCase();
-  if(/dance|नाच|डांस|नृत्य/.test(l))return"dance";if(/jump|कूद|उछल/.test(l))return"jump";if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l));if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l))return"wave";
+  if(/dance|नाच|डांस|नृत्य/.test(l))return"dance";if(/jump|कूद|उछल/.test(l))return"jump";if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l))return"wave";
   if(/laugh|हंस|हँस|comedy|कॉमेडी|मजाक|joke/.test(l))return"comedy";if(/spin|घूम|घुमो|घुमा/.test(l))return"spin";if(/clap|तालियां|ताली|ताली बजाओ/.test(l))return"clap";if(/sleep|सो जाओ|सोना|sleepy/.test(l))return"sleep";if(/surprise|आश्चर्य|चौंक|shocked/.test(l))return"surprise";return null;
 }
 </script></body>
