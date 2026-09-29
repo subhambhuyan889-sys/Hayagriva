@@ -170,6 +170,16 @@ const OWNER_VOICE_THRESHOLD=0.82;
 let ownerVoiceProfile=null,voiceMonitorStream=null,voiceAudioContext=null,voiceAnalyser=null,voiceFeatureTimer=null,voiceFeatureHistory=[],ownerVoiceCapture=false,ownerVoiceSampleVectors=[],lockedSpeechVoice=null,ownerVerifiedUntil=0;
 function accountKey(){return session?.user?.id||session?.user?.email||"local-user"}
 function ownerVoiceStorageKey(){return OWNER_VOICE_KEY+"_"+accountKey()}
+const APP_PERM_KEY="hayagriva_permissions_v2";
+const FEATURE_KEY="hayagriva_features_v2";
+const DEFAULT_APP_PERMS={mic:false,camera:false,location:false,contacts:false,sync:true,notifications:false,call:true,sms:true,whatsapp:true,social:true,booking:true,food:true,shopping:true,maps:true,documents:true,budget:true};
+const DEFAULT_FEATURES={voiceDetection:true,liveCamera:true,aiActions:true,voiceResponses:true};
+function readPrefs(key,defaults){try{return {...defaults,...JSON.parse(localStorage.getItem(key)||"{}")}}catch{return {...defaults}}}
+function appPerms(){return readPrefs(APP_PERM_KEY,DEFAULT_APP_PERMS)}
+function featurePrefs(){return readPrefs(FEATURE_KEY,DEFAULT_FEATURES)}
+function setAppPerm(key,value){const p=appPerms();p[key]=!!value;localStorage.setItem(APP_PERM_KEY,JSON.stringify(p))}
+function setFeature(key,value){const p=featurePrefs();p[key]=!!value;localStorage.setItem(FEATURE_KEY,JSON.stringify(p))}
+function permKey(type){const map={get_location:"location",weather:"location",maps:"maps",search:"social",food:"food",shopping:"shopping",booking:"booking",vehicle:"booking",call:"call",sms:"sms",whatsapp:"whatsapp",instagram:"social",facebook:"social",youtube:"social",social_post:"social",email:"sync",sos:"call"};return map[type]||null}
 function loadOwnerVoice(){try{ownerVoiceProfile=JSON.parse(localStorage.getItem(ownerVoiceStorageKey())||"null")}catch{ownerVoiceProfile=null}return ownerVoiceProfile}
 function normalizeVoiceVector(v){const n=Math.sqrt(v.reduce((a,x)=>a+x*x,0))||1;return v.map(x=>x/n)}
 function meanVoiceVectors(vs){if(!vs.length)return null;const n=vs[0].length,out=new Array(n).fill(0);for(const v of vs)for(let i=0;i<n;i++)out[i]+=v[i];return normalizeVoiceVector(out.map(x=>x/vs.length))}
