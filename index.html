@@ -551,9 +551,14 @@ async function refreshPermissions(){
           else if(name==="geolocation")await getPos();
           else if(name==="notifications"&&"Notification"in window)await Notification.requestPermission();
           setAppPerm(key,true);
-        }catch{
-          // Keep app access off when the browser/OS rejects the request.
+        }catch(e){
+          // Keep app access off when the browser/OS rejects the request, but expose the exact device/browser error.
           setAppPerm(key,false);
+          const detail=(e?.name||"PermissionError")+(e?.message?": "+e.message:"");
+          const label=String(name||"permission").replace(/^./,m=>m.toUpperCase());
+          const errNote=box.querySelector("[data-permission-error]")||document.createElement("div");
+          errNote.dataset.permissionError="1";errNote.className="intentHint";errNote.style.color="#ff9ba7";errNote.textContent=label+" permission error: "+detail;
+          box.append(errNote);
         }finally{await refreshPermissions()}
       };
     }
@@ -653,8 +658,9 @@ async function openLiveCamera(){
     $("flipCamera").textContent=cameraFacing==="environment"?"↔ Front camera":"↔ Back camera";
     state("Listening • "+(cameraFacing==="environment"?"back":"front")+" camera is active");
   }catch(e){
-    const t="Camera permission is needed to use the camera.";
-    addBubble("ai",t);speak(t);
+    const detail=(e?.name||"CameraError")+(e?.message?": "+e.message:"");
+    const t="Camera access failed ("+detail+"). Check your browser/Android camera permission and whether another app is using the camera.";
+    addBubble("ai",t);speak(t);state("Camera error • "+detail);
   }
 }
 $("liveCamera").onclick=openLiveCamera;\n$("voiceTest").onclick=()=>{const old=featurePrefs().voiceResponses;if(!old)setFeature("voiceResponses",true);speak("Namaste! Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.");};
@@ -687,7 +693,7 @@ document.addEventListener("pointermove",e=>{
   a.style.setProperty("--gaze-x",dx+"px");a.style.setProperty("--gaze-y",dy+"px");
   const head=a.querySelector(".head");if(head){head.style.transform="rotate("+Math.max(-2.2,Math.min(2.2,(e.clientX-cx)/220))+"deg)"} 
 });
-$("prompt").addEventListener("focus",()=>state(ownerVoiceProfile?"Listening • owner voice ready":"Voice locked • enroll owner voice first"));
+$("prompt").addEventListener("focus",()=>state("Listening • ready when you are"));
 
 (async()=>{bootDone();showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];window.history.replaceState(null,"",location.pathname);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200);return}const s=saved();if(s){const f=await refresh(s);if(f){showApp();loadOwnerVoice();updateOwnerVoiceUI();setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200)}}})();
 let mindnessHistory=[];
