@@ -130,6 +130,39 @@
 @keyframes doraJump{50%{transform:translateY(-90px) scale(1.04)}}@keyframes doraWave{50%{transform:rotate(-45deg) translateY(-18px)}}@keyframes doraLaugh{50%{transform:rotate(3deg) scale(1.03)}}
 @media(max-width:560px){.avatar.doraemon{--avatar-scale:.7;transform:scale(.72);margin:-12px 0 -42px}.avatar.doraemon.dance{animation:doraDanceMobile .42s ease-in-out infinite}.avatar.doraemon .doraActionEmoji{right:-8px}}
 @keyframes doraDanceMobile{0%,100%{transform:scale(.72) translateY(0) rotate(0)}50%{transform:scale(.72) translateY(-8px) rotate(5deg)}}
+</style><style id="doraemon-fix-v28">
+#avatar.doraemon{width:360px!important;height:540px!important;position:relative!important;display:block!important;overflow:visible!important;animation:doraFloat2 4s ease-in-out infinite!important;filter:drop-shadow(0 24px 30px rgba(0,0,0,.4))!important}
+#avatar.doraemon .doraHead{left:40px!important;top:55px!important;width:280px!important;height:400px!important;background:linear-gradient(150deg,#55c8ff,#1598e4 58%,#0870ba)!important;border:4px solid #075c9d!important;box-shadow:inset -18px -25px 32px rgba(0,44,100,.18),inset 15px 10px 25px rgba(255,255,255,.13)!important}
+#avatar.doraemon .doraWhiteFace{left:20px!important;top:80px!important;width:240px!important;height:180px!important;background:#fff!important;border-radius:50%!important}
+#avatar.doraemon .doraEye{top:58px!important;width:68px!important;height:84px!important;background:#fff!important;border:3px solid #111!important;border-radius:50%!important}
+#avatar.doraemon .doraEyeL{left:68px!important}#avatar.doraemon .doraEyeR{right:68px!important}
+#avatar.doraemon .doraEye i{left:23px!important;top:26px!important;width:20px!important;height:31px!important;background:#111!important;border-radius:50%!important}
+#avatar.doraemon .doraNose{top:132px!important;width:38px!important;height:38px!important;background:#ef3340!important}
+#avatar.doraemon .doraMouth{left:75px!important;top:176px!important;width:130px!important;height:64px!important;border-bottom:5px solid #222!important}
+#avatar.doraemon .doraBody{left:34px!important;top:248px!important;width:212px!important;height:150px!important;background:#fff!important;border-radius:35% 35% 42% 42%!important}
+#avatar.doraemon .doraBell{top:241px!important;width:52px!important;height:44px!important;background:#ffd23c!important}
+#avatar.doraemon .doraPocket{left:77px!important;top:307px!important;width:126px!important;height:70px!important;background:#fff!important}
+#avatar.doraemon .doraArm{top:274px!important;width:76px!important;height:106px!important;background:#fff!important}
+#avatar.doraemon .doraFoot{top:382px!important;width:96px!important;height:46px!important;background:#fff!important}
+#avatar.doraemon .doraActionEmoji{z-index:50!important}
+#avatar.doraemon.speaking .doraMouth{animation:doraTalk2 .11s infinite alternate!important}
+#avatar.doraemon.speaking .doraHead{animation:doraHeadTalk2 .7s ease-in-out infinite!important}
+#avatar.doraemon.dance{animation:doraDance2 .4s ease-in-out infinite!important}
+#avatar.doraemon.dance .doraArm.left{animation:doraArm2L .4s ease-in-out infinite!important}
+#avatar.doraemon.dance .doraArm.right{animation:doraArm2R .4s ease-in-out infinite!important}
+#avatar.doraemon.jump{animation:doraJump2 .6s ease-in-out 3!important}
+#avatar.doraemon.wave .doraArm.right{animation:doraWave2 .3s ease-in-out 7!important}
+#avatar.doraemon.laugh .doraHead{animation:doraLaugh2 .16s ease-in-out 10!important}
+@keyframes doraFloat2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes doraTalk2{to{height:12px;transform:scaleX(.75)}}
+@keyframes doraHeadTalk2{50%{transform:rotate(1deg) translateY(-3px)}}
+@keyframes doraDance2{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-12px) rotate(-7deg)}50%{transform:rotate(7deg)}75%{transform:translateY(-12px) rotate(-6deg)}}
+@keyframes doraArm2L{50%{transform:rotate(-55deg) translate(-8px,-14px)}}
+@keyframes doraArm2R{50%{transform:rotate(55deg) translate(8px,-14px)}}
+@keyframes doraJump2{50%{transform:translateY(-90px) scale(1.04)}}
+@keyframes doraWave2{50%{transform:rotate(-55deg) translate(-8px,-20px)}}
+@keyframes doraLaugh2{50%{transform:rotate(3deg) scale(1.04)}}
+@media(max-width:560px){#avatar.doraemon{transform:scale(.68)!important;transform-origin:50% 0!important;margin:-10px 0 -65px!important}}
 </style></head>
 <body>
 <div id="bootFallback" style="position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;padding:24px"><div><div style="font-size:30px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><div style="margin-top:10px;color:#67e8f9;font-size:13px">Starting securely…</div><div id="bootError" style="margin-top:12px;color:#ff9ba7;font-size:11px;max-width:320px"></div></div></div><div class="wrap">
