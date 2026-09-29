@@ -256,6 +256,7 @@ function clearOwnerVoice(){ownerVoiceProfile=null;ownerVoiceSampleVectors=[];loc
 function save(s){session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY)}
 function saved(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
 function authMsg(t){$("authMsg").textContent=t||""}
+function bootDone(){const b=$("bootFallback");if(b)b.style.display="none"}
 function showApp(){ $("auth").style.display="none";$("app").style.display="block" }
 function showAuth(){ $("auth").style.display="block";$("app").style.display="none" }
 async function authFetch(path,body){const r=await fetch(SUPABASE_URL+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+KEY},body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.msg||d.error_description||d.message||d.error||"Request failed");return d}
