@@ -357,7 +357,7 @@ function startVoice(){
   startVoiceMonitor();if(!SR){speak("Voice input is not supported in this browser.");return}
   if(listening)return;
   if(!recognition){
-    recognition=new SR();recognition.lang="hi-IN";recognition.interimResults=true;try{if("processLocally" in recognition)recognition.processLocally=true}catch{}recognition.continuous=true;recognition.maxAlternatives=1;
+    recognition=new SR();recognition.lang="hi-IN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=1;
     recognition.onstart=()=>{listening=true;$("mic").classList.add("active");state("Listening • owner voice detection is on")};
     recognition.onresult=e=>{let finalText="";for(let i=e.resultIndex;i<e.results.length;i++){const text=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(" "+text);else $("prompt").value=text}if(finalText.trim()){$("prompt").value="";handleVoiceText(finalText.trim())}};
     recognition.onerror=e=>{listening=false;$("mic").classList.remove("active");if(e.error!=="not-allowed"&&voiceMode&&!sending&&!voiceBusy)setTimeout(startVoice,700);else state(e.error==="not-allowed"?"Microphone permission is required":"Voice paused")};
@@ -507,7 +507,7 @@ if(!r.ok){const detail=d?.providers?.find(x=>x?.detail)?.detail;throw new Error(
 data=d;
 }finally{clearTimeout(timer)}
 }catch(e){throw e}
-if(!data)throw new Error("Hayagriva did not respond");const reply=data.reply||data.text||"I'm here. Tell me what you need.";addBubble("ai",reply);history.push({role:"user",text:message},{role:"model",text:reply});history=history.slice(-20);selectedFiles=[];$("files").value="";speak(reply,data.audio,data.audio_mime);const localAction=detectLocalAction(message);if(data.action)actionCard(data.action);else if(localAction)actionCard(localAction)}
+if(!data)throw new Error("Hayagriva did not respond");const reply=data.reply||data.text||"I'm here. Tell me what you need.";addBubble("ai",reply);history.push({role:"user",text:message},{role:"model",text:reply});history=history.slice(-20);selectedFiles=[];$("files").value="";speak(reply,data.audio,data.audio_mime);const localAction=detectLocalAction(message);if(data.action?.type&&data.action.type!=="none")actionCard(data.action);else if(localAction)actionCard(localAction)}
 $("chatForm").onsubmit=async e=>{
   e.preventDefault();
   const m=$("prompt").value.trim();$("prompt").value="";$("chatForm")?.classList.remove("up");
