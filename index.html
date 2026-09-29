@@ -702,18 +702,14 @@ $("mindnessForm").onsubmit=async e=>{
 <noscript><div style="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui;text-align:center;padding:24px"><div><div style="font-size:28px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><p style="color:#91a0b4">Please enable JavaScript to use Hayagriva.</p></div></div></noscript><script>
 function performCharacterAction(kind){
   const a=$("avatar");if(!a)return;
-  const map={dance:["dance","💃"],jump:["jump","⬆️"],wave:["wave","👋"],laugh:["laugh","😂"],comedy:["laugh","🤣"]};
-  const v=map[kind];if(!v)return;
-  a.classList.remove("dance","jump","wave","laugh","actionShow");void a.offsetWidth;a.classList.add(v[0],"actionShow");$("doraActionEmoji").textContent=v[1];
-  clearTimeout(window.__doraActionTimer);window.__doraActionTimer=setTimeout(()=>a.classList.remove(v[0],"actionShow"),kind==="dance"?4200:2600);
+  const map={dance:["dance","💃"],jump:["jump","⬆️"],wave:["wave","👋"],laugh:["laugh","😂"],comedy:["laugh","🤣"],spin:["spin","🌀"],clap:["clap","👏"],sleep:["sleep","😴"],surprise:["surprise","😲"]};const v=map[kind];if(!v)return;
+  a.classList.remove("dance","jump","wave","laugh","spin","clap","sleep","surprise","actionShow");void a.offsetWidth;a.classList.add(v[0],"actionShow");
+  const e=$("doraActionEmoji");if(e)e.textContent=v[1];clearTimeout(window.__doraActionTimer);window.__doraActionTimer=setTimeout(()=>a.classList.remove(v[0],"actionShow"),kind==="dance"?4300:2800);
 }
 function detectCharacterAction(message){
   const l=(message||"").toLowerCase();
-  if(/dance|नाच|डांस|नृत्य/.test(l))return"dance";
-  if(/jump|कूद|उछल/.test(l))return"jump";
-  if(/wave|हाथ हिला|हाथ हिलाओ/.test(l))return"wave";
-  if(/laugh|हंस|हँस|comedy|कॉमेडी|मजाक|joke/.test(l))return"comedy";
-  return null;
+  if(/dance|नाच|डांस|नृत्य/.test(l))return"dance";if(/jump|कूद|उछल/.test(l))return"jump";if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l));if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l))return"wave";
+  if(/laugh|हंस|हँस|comedy|कॉमेडी|मजाक|joke/.test(l))return"comedy";if(/spin|घूम|घुमो|घुमा/.test(l))return"spin";if(/clap|तालियां|ताली|ताली बजाओ/.test(l))return"clap";if(/sleep|सो जाओ|सोना|sleepy/.test(l))return"sleep";if(/surprise|आश्चर्य|चौंक|shocked/.test(l))return"surprise";return null;
 }
 </script></body>
 </html>
