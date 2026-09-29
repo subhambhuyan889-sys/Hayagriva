@@ -172,7 +172,7 @@ function accountKey(){return session?.user?.id||session?.user?.email||"local-use
 function ownerVoiceStorageKey(){return OWNER_VOICE_KEY+"_"+accountKey()}
 const APP_PERM_KEY="hayagriva_permissions_v2";
 const FEATURE_KEY="hayagriva_features_v2";
-const DEFAULT_APP_PERMS={mic:false,camera:false,location:false,contacts:false,sync:true,notifications:false,call:true,sms:true,whatsapp:true,social:true,booking:true,food:true,shopping:true,maps:true,documents:true,budget:true};
+const DEFAULT_APP_PERMS={mic:false,camera:false,location:false,contacts:false,sync:true,notifications:false,call:false,sms:false,whatsapp:false,social:false,booking:false,food:false,shopping:false,maps:false,documents:false,budget:false};
 const DEFAULT_FEATURES={voiceDetection:true,liveCamera:true,aiActions:true,voiceResponses:true};
 function readPrefs(key,defaults){try{return {...defaults,...JSON.parse(localStorage.getItem(key)||"{}")}}catch{return {...defaults}}}
 function appPerms(){return readPrefs(APP_PERM_KEY,DEFAULT_APP_PERMS)}
