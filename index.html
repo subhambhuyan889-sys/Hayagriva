@@ -663,7 +663,8 @@ async function openLiveCamera(){
     addBubble("ai",t);speak(t);state("Camera error • "+detail);
   }
 }
-$("liveCamera").onclick=openLiveCamera;\n$("voiceTest").onclick=()=>{const old=featurePrefs().voiceResponses;if(!old)setFeature("voiceResponses",true);speak("Namaste! Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.");};
+$("liveCamera").onclick=openLiveCamera;
+$("voiceTest").onclick=()=>{const old=featurePrefs().voiceResponses;if(!old)setFeature("voiceResponses",true);speak("Namaste! Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.");};
 $("flipCamera").onclick=async()=>{
   if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
   cameraFacing=cameraFacing==="environment"?"user":"environment";
