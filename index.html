@@ -375,18 +375,22 @@ async function permissionState(name){
 }
 async function refreshPermissions(){
   const rows=[
-
     ["Microphone","microphone","Voice detection and voice commands.","mic"],
     ["Camera","camera","Live camera and photo capture.","camera"],
-    ["Location","geolocation","Maps, local weather and nearby services.","location"],
-    ["Contacts","contacts","Choose contacts when you ask Hayagriva to use them.","contacts"],
-    ["Sync","app","Allow Hayagriva to sync your saved preferences and app state.","sync"],
-    ["Notifications","notifications","Optional Hayagriva notifications.","notifications"],
-    ["Calls","app","Allow Hayagriva to prepare phone calls.","call"],
-    ["SMS","app","Allow Hayagriva to prepare SMS messages.","sms"],
-    ["WhatsApp","app","Allow Hayagriva to open WhatsApp actions.","whatsapp"],
-    ["Social media","app","Allow Instagram/Facebook/YouTube action handoffs.","social"],
-    ["Bookings","app","Allow booking/vehicle action handoffs.","booking"]
+    ["Location","geolocation","Maps, routes, distance and local services.","location"],
+    ["Contacts","contacts","Use selected contacts for calls, messages and actions.","contacts"],
+    ["Sync","app","Save and sync Hayagriva preferences and app state.","sync"],
+    ["Notifications","notifications","Allow useful Hayagriva notifications.","notifications"],
+    ["Calls","app","Allow Hayagriva to place calls when you command it.","call"],
+    ["SMS","app","Allow Hayagriva to send SMS when you command it.","sms"],
+    ["WhatsApp","app","Allow WhatsApp actions when enabled.","whatsapp"],
+    ["Social media","app","Allow Instagram, Facebook and YouTube actions.","social"],
+    ["Food delivery","app","Allow food-ordering actions through supported services.","food"],
+    ["Shopping","app","Allow shopping actions through supported services.","shopping"],
+    ["Maps & routes","app","Allow maps, routes and travel-time actions.","maps"],
+    ["Bookings & rides","app","Allow Uber/taxi/booking actions through supported integrations.","booking"],
+    ["Documents","app","Allow Hayagriva to create and prepare documents.","documents"],
+    ["Budget & payments","app","Allow budget/payment actions through supported integrations.","budget"]
   ];
   const box=$("permissionList");box.innerHTML="";const p=appPerms();
   const fp=featurePrefs();
@@ -399,7 +403,7 @@ async function refreshPermissions(){
   for(const [label,desc,key] of featureRows){
     const row=document.createElement("div");row.className="permissionRow";
     const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
-    const btn=document.createElement("button");btn.textContent=fp[key]?"Allowed":"Off";btn.className=fp[key]?"allowed":"blocked";
+    const btn=document.createElement("button");btn.textContent=fp[key]?"ON":"OFF";btn.className=fp[key]?"allowed":"blocked";
     btn.onclick=()=>{setFeature(key,!featurePrefs()[key]);refreshPermissions();if(key==="voiceDetection"&&!featurePrefs().voiceDetection)stopVoice();if(key==="voiceDetection"&&featurePrefs().voiceDetection&&ownerVoiceProfile)startVoice()};
     row.append(info,btn);box.append(row);
   }
@@ -421,15 +425,15 @@ async function refreshPermissions(){
       row.append(info,btn);box.append(row);continue
     }
     if(name==="app"){
-      btn.textContent=p[key]?"Allowed":"Off";btn.className=p[key]?"allowed":"blocked";
+      btn.textContent=p[key]?"ON":"OFF";btn.className=p[key]?"allowed":"blocked";
       btn.onclick=()=>{setAppPerm(key,!appPerms()[key]);refreshPermissions()};
     }else{
       const st=await permissionState(name);
       const browserState=st?.state||"unknown";
       const appAllowed=!!p[key];
-      btn.textContent=appAllowed?"Allowed":"Off";
+      btn.textContent=appAllowed?"ON":"OFF";
       btn.className=appAllowed?"allowed":"blocked";
-      btn.title="Browser permission: "+browserState+". Hayagriva app access: "+(appAllowed?"Allowed":"Off");
+      btn.title="Device permission: "+browserState+". Hayagriva access: "+(appAllowed?"ON":"OFF");
       btn.onclick=async()=>{
         const now=appPerms()[key];
         if(now){setAppPerm(key,false);await refreshPermissions();return}
@@ -447,7 +451,7 @@ async function refreshPermissions(){
     }
     row.append(info,btn);box.append(row);
   }
-  const note=document.createElement("div");note.className="intentHint";note.textContent="Browser/OS permissions are controlled by your device. Hayagriva also respects these app-level switches.";box.append(note);
+  const note=document.createElement("div");note.className="intentHint";note.textContent="ON = Hayagriva may use this capability when you command it. OFF = Hayagriva will not use it. Device permissions are requested only when needed.";box.append(note);
 }
 $("permissions").onclick=async()=>{$("permissionSheet").hidden=false;await refreshPermissions()};
 $("closePermissions").onclick=()=>{$("permissionSheet").hidden=true};
