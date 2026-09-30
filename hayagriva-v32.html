@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
+<meta name="hayagriva-build" content="2026-09-30-32">
+<title>HAYAGRIVA — AI Action & Safety Companion • build 2026-09-30-32</title>
+<style>
+:root{--bg:#04060c;--panel:rgba(10,15,27,.82);--line:rgba(148,163,184,.16);--text:#f8fbff;--muted:#91a0b4;--cyan:#67e8f9;--violet:#9b87ff;--green:#61e7bb;--gold:#e7bd68;--danger:#ff6b7a}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(900px 600px at 50% -15%,#10263b 0,transparent 60%),radial-gradient(700px 500px at 5% 70%,rgba(155,135,255,.1),transparent 60%),#03050a;color:var(--text)}body{overflow-x:hidden}button,input,textarea{font:inherit}button{cursor:pointer}.wrap{width:min(1180px,94%);margin:auto;padding:18px 0 30px}.brand{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}.company{font-size:12px;font-weight:900;letter-spacing:.22em;color:#e8d49d}.product{text-align:center}.product b{font-size:18px;letter-spacing:.2em;background:linear-gradient(90deg,#fff,var(--cyan),var(--violet),#fff);background-size:220%;color:transparent;-webkit-background-clip:text;animation:shine 5s linear infinite}.product small{display:block;color:#66758a;font-size:8px;letter-spacing:.12em;margin-top:4px}.status{justify-self:end;font-size:10px;color:#8391a5}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:6px}.card{background:var(--panel);border:1px solid var(--line);border-radius:25px;backdrop-filter:blur(22px);box-shadow:0 28px 90px #0008}.auth{max-width:470px;margin:7vh auto;padding:30px}.auth h1{margin:0 0 8px;font-size:34px}.muted{color:var(--muted);line-height:1.5;font-size:13px}.auth label{display:block;font-size:11px;color:#aab6c5;margin:16px 0 7px}.auth input,.composer textarea{width:100%;border:1px solid var(--line);background:#02060dcc;color:var(--text);outline:0;border-radius:14px;padding:13px}.auth input{height:50px}.auth input:focus,.composer textarea:focus{border-color:#67e8f966;box-shadow:0 0 0 4px #67e8f90b}.primary{width:100%;height:52px;margin-top:20px;border:0;border-radius:14px;font-weight:900;background:linear-gradient(110deg,var(--green),var(--cyan),var(--violet));color:#031014}.google{width:100%;height:50px;border:1px solid var(--line);border-radius:14px;background:#ffffff08;color:white;font-weight:800;margin:8px 0 16px}.switch{text-align:center;margin-top:15px;font-size:12px;color:#718095}.switch button{border:0;background:none;color:var(--cyan);font-weight:800}.msgAuth{text-align:center;min-height:18px;color:#ff9ba7;font-size:11px}.app{display:block}.hero{display:none}.topbar{display:flex;justify-content:space-between;align-items:center;padding:10px 2px 2px;position:relative;z-index:30}.productMark{font-size:14px;font-weight:900;letter-spacing:.22em;background:linear-gradient(90deg,#fff,var(--cyan),var(--violet));color:transparent;-webkit-background-clip:text}.hero h1{font-size:clamp(30px,6vw,52px);margin:0;letter-spacing:-.06em}.hero p{margin:8px auto;color:var(--muted);font-size:13px;max-width:620px}.stage{position:relative;min-height:calc(100vh - 78px);display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:0;padding:0 0 8px}.sidePanel{display:none}.sideTitle{font-size:9px;color:#68788e;letter-spacing:.16em;font-weight:900;padding:4px 5px}.tool{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);background:#ffffff04;border-radius:15px;color:#dce7f3;text-align:left}.tool:hover{border-color:#67e8f944;background:#67e8f908}.toolIcon{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#ffffff08}.tool b{font-size:12px}.tool small{display:block;color:#718095;font-size:9px;margin-top:2px}.avatarCard{width:100%;min-height:calc(100vh - 190px);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;background:radial-gradient(circle at 50% 43%,rgba(103,232,249,.10),transparent 38%),radial-gradient(circle at 50% 75%,rgba(155,135,255,.07),transparent 42%);border:0;border-radius:0;box-shadow:none}.avatarGlow{position:absolute;width:min(600px,75vw);height:min(600px,75vw);border-radius:50%;background:radial-gradient(circle,rgba(103,232,249,.12),transparent 68%);filter:blur(8px)}.avatar{--avatar-scale:1;width:390px;height:560px;position:relative;z-index:2;animation:float 4.5s ease-in-out infinite;filter:drop-shadow(0 24px 35px rgba(0,0,0,.35))}.avatar .hairBack{position:absolute;left:57px;top:35px;width:246px;height:315px;border-radius:48% 48% 44% 44%;background:linear-gradient(145deg,#34264b,#0a0c18 72%);border:2px solid rgba(240,198,255,.18);box-shadow:0 12px 55px rgba(155,135,255,.14);transform-origin:50% 18%;animation:hairSway 4.8s ease-in-out infinite}.head{position:absolute;left:86px;top:63px;width:188px;height:225px;border-radius:49% 49% 47% 47%;background:linear-gradient(145deg,#ffe1d5,#f2c0b2 58%,#d99b91);box-shadow:inset -13px -17px 30px rgba(123,76,76,.13),0 10px 30px rgba(0,0,0,.12);transform-origin:50% 55%;transition:transform .25s ease;z-index:4!important}.ear{position:absolute;top:155px;width:27px;height:48px;border-radius:50%;background:#e5aa9e;border:2px solid #ffd0c4;z-index:1}.ear.l{left:75px}.ear.r{right:75px}.hairFront{position:absolute;left:81px;top:39px;width:198px;height:132px;border-radius:55% 55% 42% 38%;background:linear-gradient(145deg,#40304f,#0c101c 78%);z-index:5;clip-path:polygon(0 0,100% 0,95% 64%,82% 43%,70% 84%,55% 49%,40% 88%,27% 49%,9% 75%)}.eye{position:absolute;top:165px;width:48px;height:29px;z-index:6}.eye.l{left:108px}.eye.r{right:108px}.eye:before{content:"";position:absolute;left:3px;top:2px;width:42px;height:24px;border-radius:50%;background:#fff;box-shadow:0 1px 0 #b97f79}.eye:after{content:"";position:absolute;left:17px;top:6px;width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0 12%,#7a5360 14% 48%,#352936 52%);box-shadow:0 0 0 3px #7a5360,0 0 12px rgba(103,232,249,.32);transform:translate(var(--gaze-x,0px),var(--gaze-y,0px));transition:transform .18s ease,opacity .15s}.eye:before{box-shadow:inset 0 -2px 3px rgba(80,35,45,.12),0 1px 0 #b97f79}.blink{animation:blink 5s infinite}.nose{position:absolute;left:175px;top:190px;width:9px;height:34px;border-right:2px solid #b77973;border-bottom:2px solid #b77973;border-radius:0 0 10px 0;z-index:6}.mouth{position:absolute;left:151px;top:239px;width:58px;height:17px;border-bottom:4px solid #a64d69;border-radius:0 0 55% 55%;z-index:6;transform-origin:50% 50%;transition:height .08s ease,transform .08s ease}.bodyShape{position:absolute;left:62px;top:285px;width:236px;height:220px;border-radius:115px 115px 30px 30px;background:linear-gradient(145deg,#34275a,#0a1220);border:1px solid rgba(141,239,240,.16);z-index:1}.neck{position:absolute;left:163px;top:276px;width:38px;height:45px;background:#dda399;z-index:1}.hairStrand{position:absolute;width:52px;height:185px;background:#111529;border-radius:50%;z-index:7}.hs1{left:62px;top:103px;transform:rotate(7deg)}.hs2{right:62px;top:102px;transform:rotate(-8deg)}.avatar.speaking .mouth{animation:talk .13s infinite alternate}.avatar.speaking .head{animation:talkHead 1.9s ease-in-out infinite}.avatar.listening .avatarGlow{animation:listenGlow 1.4s ease-in-out infinite}.avatar.thinking .hairBack{animation:hairThink 1.8s ease-in-out infinite}.avatar.speaking{animation:float 2s ease-in-out infinite}.avatar.listening .eye:after{box-shadow:0 0 14px #61e7bb}.avatar.thinking .head{animation:think 1.4s ease-in-out infinite}.avatarLabel{text-align:center;z-index:8;margin-top:-8px}.avatarName{font-weight:900;letter-spacing:.16em;font-size:14px}.avatarState{color:#a4b3c6;font-size:11px;margin-top:5px}.mic{pointer-events:none;user-select:none;margin-top:7px;width:28px;height:28px;border-radius:9px;border:1px solid rgba(103,232,249,.28);background:rgba(103,232,249,.06);color:#9eafc1;font-size:12px;display:grid;place-items:center;box-shadow:none;opacity:.75}.mic.active{border-color:rgba(97,231,187,.55);background:rgba(97,231,187,.08);animation:none;opacity:1}.composerWrap{width:min(940px,96%);padding:0;margin-top:0;position:relative;z-index:20}.composer{display:flex;gap:9px;align-items:end;max-width:850px;margin:auto;padding:12px;border:1px solid var(--line);background:#070b14ee;border-radius:20px;box-shadow:0 18px 50px #0008;transition:.25s}.composer.up{transform:translateY(-34px);box-shadow:0 25px 70px #000b}.composer textarea{min-height:48px;max-height:160px;resize:none;border:0;background:transparent}.send{width:80px;height:48px;border:0;border-radius:13px;background:var(--green);font-weight:900}.inputTools{display:flex;gap:6px;flex-wrap:wrap;max-width:900px;margin:7px auto 0}.mini{border:1px solid var(--line);background:#ffffff05;color:#9eafc1;border-radius:10px;padding:7px 9px;font-size:10px}.messages{max-width:900px;margin:0 auto;max-height:145px;overflow:auto;padding:0 4px}.bubble{max-width:80%;padding:10px 13px;border-radius:15px;margin:7px 0;white-space:pre-wrap;line-height:1.45;font-size:13px}.bubble.user{margin-left:auto;background:#123c42}.bubble.ai{background:#ffffff07;border:1px solid var(--line)}.actionCard{max-width:80%;margin:8px auto 8px 0;padding:12px;border:1px solid #e7bd6840;border-radius:15px;background:#e7bd6809}.actionCard b{font-size:11px}.actionCard p{font-size:11px;color:#a9b7c8;margin:6px 0 9px}.actionBtns{display:flex;gap:7px}.confirm{border:0;border-radius:9px;padding:7px 10px;background:var(--green);font-weight:800;font-size:10px}.cancel{border:1px solid var(--line);border-radius:9px;padding:7px 10px;background:#ffffff05;color:#a9b7c8;font-size:10px}.logout{position:static}.pill{border:1px solid var(--line);background:#ffffff05;color:#9baabd;border-radius:10px;padding:7px 10px;font-size:10px}@keyframes micPulse{50%{transform:scale(1.06);box-shadow:0 0 0 15px rgba(255,107,122,.04)}}@keyframes blink{0%,44%,48%,100%{transform:scaleY(1)}46%{transform:scaleY(.08)}}@keyframes talk{to{height:6px;transform:scaleX(.7)}}@keyframes talkHead{0%,100%{transform:rotate(0deg)}35%{transform:rotate(-1.2deg) translateY(-1px)}70%{transform:rotate(1deg)}}@keyframes hairSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(-1.8deg)}}@keyframes hairThink{50%{transform:rotate(2deg) translateY(-2px)}}@keyframes listenGlow{50%{opacity:.7;transform:scale(1.08)}}@keyframes float{0%,100%{transform:translateY(0) scale(var(--avatar-scale,1))}50%{transform:translateY(-6px) scale(var(--avatar-scale,1))}}@keyframes think{50%{transform:rotate(2deg) translateY(-2px)}}@keyframes shine{to{background-position:220%}}@media(max-width:700px){.wrap{width:100%;padding:4px 8px 6px}.stage{min-height:calc(100svh - 52px);padding-bottom:4px}.avatarCard{min-height:calc(100svh - 245px);border-radius:0;justify-content:center}.avatar{--avatar-scale:.72;margin:-18px 0 -55px}.composerWrap{width:100%;padding:0;margin-top:0}.messages{max-height:120px;padding:0 2px}.bubble,.actionCard{max-width:96%}.send{width:64px}.inputTools{justify-content:center}.mini{padding:6px 8px}}@media(max-width:560px){.brand{grid-template-columns:1fr auto}.product{grid-column:1/-1;grid-row:1;margin-bottom:8px}.company,.status{grid-row:2}.composer{padding:8px}.send{width:58px}.avatar{--avatar-scale:.60;margin:-12px 0 -42px}.avatarLabel{margin-top:-2px}.mic{width:28px;height:28px;margin-top:7px;font-size:12px}}
+.brow{position:absolute;top:153px;width:42px;height:9px;border-top:3px solid #5d4050;border-radius:50%;z-index:7}.brow.lb{left:108px;transform:rotate(4deg)}.brow.rb{right:108px;transform:rotate(-4deg)}.blush{position:absolute;top:211px;width:34px;height:14px;border-radius:50%;background:rgba(255,111,145,.22);filter:blur(2px);z-index:6}.blush.lb{left:94px}.blush.rb{right:94px}.cameraSheet{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.82);display:grid;place-items:center;padding:18px;overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}.cameraSheet .cameraBox{max-height:calc(100dvh - 28px);overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;margin:auto}.cameraBox{width:min(720px,100%);padding:12px;border-radius:22px;background:#090e18;border:1px solid var(--line);box-shadow:0 30px 100px #000}.cameraBox video{width:100%;max-height:65vh;object-fit:cover;border-radius:16px;background:#000}.cameraActions{display:flex;gap:8px;justify-content:center;padding-top:10px}.cameraSheet[hidden]{display:none}.liveBadge{font-size:7px;letter-spacing:.08em;color:#61e7bb;margin-left:5px}.composer{backdrop-filter:blur(18px)}.messages{display:block!important}.bubble{display:block!important}.ownerLock{font-size:10px;color:#91a0b4;text-align:center;margin-top:6px}.ownerLock.locked{color:#ffb4bd}.ownerLock.ready{color:#61e7bb}
+.permissionRow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px;border:1px solid var(--line);border-radius:14px;background:#ffffff04}
+.permissionRow b{display:block;font-size:12px}.permissionRow small{display:block;color:#718095;font-size:9px;margin-top:3px;line-height:1.35}
+.permissionRow button{min-width:78px;border:1px solid var(--line);border-radius:9px;padding:7px 9px;background:#ffffff08;color:#dce7f3;font-size:10px;font-weight:800}
+.permissionRow button.allowed{border-color:#61e7bb66;background:#61e7bb12;color:#61e7bb}.permissionRow button.blocked{border-color:#ff6b7a55;background:#ff6b7a0d;color:#ff9ba7}.permissionRow button:disabled{opacity:.55;cursor:not-allowed}
+.intentHint{font-size:9px;color:#718095;margin-top:6px;text-align:center}
+
+/* Hayagriva plush character — complete body, robe, crown and sandals */
+.avatar{height:560px}
+.avatar{overflow:visible!important}
+.plushBody{position:absolute;left:58px;top:276px;width:250px;height:250px;border-radius:48% 48% 38% 38%;background:linear-gradient(145deg,#f6e7d3 0%,#ead1b5 62%,#c79e7c 100%);border:2px solid rgba(255,255,255,.32);box-shadow:inset -18px -20px 32px rgba(119,75,45,.12),inset 12px 10px 22px rgba(255,255,255,.28),0 22px 40px rgba(0,0,0,.24);z-index:1!important}
+.plushBody:before{content:"";position:absolute;left:30px;top:28px;width:72px;height:45px;border-radius:50%;background:rgba(255,255,255,.18);filter:blur(4px);transform:rotate(-18deg)}
+.plushBody:after{content:"";position:absolute;left:calc(50% - 72px);bottom:30px;width:144px;height:24px;border-radius:50%;background:rgba(94,55,35,.10);filter:blur(7px)}
+.robe{position:absolute;left:82px;top:300px;width:202px;height:190px;background:linear-gradient(160deg,#fff 0%,#f7f4ec 55%,#d9d5c9 100%);clip-path:polygon(14% 0,86% 0,100% 100%,0 100%);border-radius:28px 28px 18px 18px;z-index:3!important;box-shadow:0 14px 25px rgba(0,0,0,.16),inset -12px -10px 18px rgba(118,108,88,.12)}
+.robe:before{content:"";position:absolute;left:30px;top:0;width:62px;height:100%;background:rgba(255,255,255,.48);clip-path:polygon(0 0,100% 0,70% 100%,0 100%)}
+.robe:after{content:"";position:absolute;right:25px;top:18px;width:7px;height:145px;border-radius:9px;background:rgba(196,187,168,.34);transform:rotate(4deg)}
+.crown{position:absolute;left:105px;top:18px;width:150px;height:82px;z-index:9;display:flex;align-items:flex-start;justify-content:center;gap:4px}
+.crown:before{content:"";position:absolute;left:4px;right:4px;bottom:5px;height:30px;border-radius:50% 50% 44% 44%;background:linear-gradient(145deg,#7e8f42,#4c6329);box-shadow:0 5px 12px rgba(0,0,0,.25)}
+.crown i{display:block;width:22px;height:52px;margin-top:3px;background:linear-gradient(145deg,#9caf59,#526b2c);border-radius:80% 18% 80% 18%;transform:rotate(-28deg);box-shadow:inset 4px 3px 6px rgba(255,255,255,.22)}
+.crown i:nth-child(2){margin-top:0;transform:rotate(-15deg)}.crown i:nth-child(3){margin-top:-3px;transform:rotate(-5deg)}.crown i:nth-child(4){margin-top:-4px;transform:rotate(5deg)}.crown i:nth-child(5){margin-top:-1px;transform:rotate(15deg)}.crown i:nth-child(6){transform:rotate(28deg)}
+.sandals{position:absolute;left:95px;top:487px;width:176px;height:58px;z-index:8;display:flex;justify-content:space-between}.sandals span{display:block;width:66px;height:24px;margin-top:20px;border-radius:50% 50% 45% 45%;background:linear-gradient(180deg,#9a633c,#5e3826);box-shadow:0 8px 12px rgba(0,0,0,.25)}.sandals span:after{content:"";display:block;width:8px;height:34px;background:#6e402b;border-radius:8px;margin:0 auto;transform:translateY(-20px) rotate(22deg)}
+.face{position:absolute;inset:0;z-index:6}.tinyMouth{position:absolute;left:151px;top:239px;width:58px;height:17px;border-bottom:4px solid #a64d69;border-radius:0 0 55% 55%;transition:.08s}.face .eye{z-index:2}.avatar.speaking .tinyMouth{animation:talk .13s infinite alternate}.avatar.speaking .head{animation:talkHead 1.9s ease-in-out infinite}
+@media(max-width:700px){.avatar{--avatar-scale:.72}.crown{transform:scale(.96);transform-origin:50% 0}.plushBody{transform:scale(.98);transform-origin:50% 0}.robe{transform:scale(.98);transform-origin:50% 0}.sandals{transform:scale(.98);transform-origin:50% 0}}
+@media(max-width:560px){.avatar{--avatar-scale:.60}.crown{transform:scale(.9);transform-origin:50% 0}.sandals{transform:scale(.9);transform-origin:50% 0}}
+</style>
+<style>
+/* Refined AI detection indicator */
+.mic{position:absolute;right:10px;bottom:4px;margin:0!important;width:24px!important;height:24px!important;border-radius:8px!important;font-size:10px!important;opacity:.28!important;transform:none!important;box-shadow:none!important;transition:opacity .18s,background .18s,border-color .18s}
+.mic.active{opacity:1!important;border-color:#61e7bb88!important;background:#61e7bb12!important;animation:detectBlink .85s steps(2,end) infinite!important}
+@keyframes detectBlink{0%,100%{opacity:.25}50%{opacity:1}}
+.avatarLabel{position:relative;padding-right:36px}
+.avatar.listening .eye:after{box-shadow:0 0 0 3px #7a5360,0 0 16px rgba(97,231,187,.55)}
+.avatar.thinking .eye:after{transform:translate(var(--gaze-x,0px),calc(var(--gaze-y,0px) - 1px)) scale(.94)}
+</style>
+<style>
+/* Hayagriva character refinement */
+.avatar{isolation:isolate}
+.avatarAura{position:absolute;left:55px;top:25px;width:280px;height:505px;border-radius:48%;background:radial-gradient(ellipse at 50% 38%,rgba(103,232,249,.11),transparent 58%);filter:blur(2px);z-index:0;transition:.3s}
+.head{overflow:visible!important}
+.head .ear{z-index:1}
+.head .hairBack{z-index:2}
+.head .face{z-index:6}
+.head .hairFront{z-index:7}
+.face .eye{top:101px;width:44px;height:30px}
+.face .eye.l{left:22px}.face .eye.r{right:22px}
+.face .eye:before{left:1px;top:3px;width:42px;height:24px}
+.face .eye:after{left:14px;top:6px;width:15px;height:15px}
+.face .brow{top:90px;width:42px}
+.face .brow.lb{left:21px}.face .brow.rb{right:21px}
+.face .blush{top:147px;width:34px}
+.face .blush.lb{left:9px}.face .blush.rb{right:9px}
+.face .nose{left:89px;top:124px}
+.face .tinyMouth{left:65px;top:174px;width:58px;height:17px}
+.head .hairBack{left:-28px;top:-28px;width:246px;height:315px}
+.head .hairFront{left:-5px;top:-24px;width:198px;height:132px}
+.head .ear.l{left:-12px;top:92px}.head .ear.r{right:-12px;top:92px}
+.avatar.listening .avatarAura{animation:avatarListen 1.35s ease-in-out infinite}
+.avatar.thinking .avatarAura{animation:avatarThink 1.1s ease-in-out infinite}
+.avatar.speaking .avatarAura{animation:avatarSpeak .7s ease-in-out infinite}
+.avatar.speaking .tinyMouth{animation:talk .11s infinite alternate}
+.avatar.speaking .head{animation:talkHead .9s ease-in-out infinite}
+.avatar.speaking .robe{animation:robeTalk .9s ease-in-out infinite}
+.avatar.speaking .crown{animation:crownTalk .9s ease-in-out infinite}
+.avatar.listening .head{animation:listenHead 2.4s ease-in-out infinite}
+@keyframes avatarListen{50%{transform:scale(1.05);opacity:.8}}
+@keyframes avatarThink{50%{transform:rotate(-1deg) scale(1.04);opacity:.85}}
+@keyframes avatarSpeak{50%{transform:scale(1.025);opacity:1}}
+@keyframes listenHead{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-1px) rotate(-.7deg)}}
+@keyframes robeTalk{50%{transform:translateY(-1px) scaleX(1.01)}}
+@keyframes crownTalk{50%{transform:translateY(-2px) rotate(-.8deg)}}
+</style>
+<style>
+/* Runtime face motion */
+.avatar.listening .eye:after{animation:eyeScan 2.2s ease-in-out infinite alternate}
+.avatar.thinking .eye:after{animation:eyeThink .8s ease-in-out infinite alternate}
+.avatar.speaking .eye:after{animation:eyeTalk 1.1s ease-in-out infinite alternate}
+.avatar.speaking .tinyMouth{animation:talk .10s infinite alternate}
+@keyframes eyeScan{0%{transform:translate(-2px,0)}50%{transform:translate(2px,-1px)}100%{transform:translate(-1px,1px)}}
+@keyframes eyeThink{0%{transform:translate(2px,-1px)}100%{transform:translate(-2px,1px)}}
+@keyframes eyeTalk{0%,100%{transform:translate(-1px,0)}50%{transform:translate(1px,1px)}}
+</style>
+<style>
+/* Doraemon-style interactive Hayagriva character */
+.avatar.doraemon{width:360px;height:560px;animation:doraFloat 4s ease-in-out infinite;filter:drop-shadow(0 25px 32px rgba(0,0,0,.35))}
+.avatar.doraemon .doraAura{position:absolute;left:30px;top:20px;width:300px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(44,151,235,.18),transparent 68%);filter:blur(5px);z-index:0}
+.doraHead{position:absolute;left:40px;top:65px;width:280px;height:410px;background:linear-gradient(150deg,#35a9ee 0%,#168bd8 58%,#0869b7 100%);border-radius:48% 48% 44% 44%;border:3px solid #075c9d;box-shadow:inset -18px -25px 32px rgba(0,44,100,.18),inset 15px 10px 25px rgba(255,255,255,.13);z-index:2}
+.doraWhiteFace{position:absolute;left:22px;top:78px;width:236px;height:178px;background:#fff;border-radius:48% 48% 50% 50%;z-index:3}
+.doraEye{position:absolute;top:57px;width:68px;height:83px;background:#fff;border:3px solid #111;border-radius:50%;z-index:5;overflow:hidden}
+.doraEyeL{left:69px}.doraEyeR{right:69px}
+.doraEye i{position:absolute;left:24px;top:27px;width:20px;height:30px;background:#111;border-radius:50%}
+.doraEye i:after{content:"";position:absolute;left:5px;top:4px;width:6px;height:8px;background:#fff;border-radius:50%}
+.doraNose{position:absolute;left:calc(50% - 18px);top:131px;width:36px;height:36px;background:#e42d38;border-radius:50%;border:2px solid #a71925;z-index:6;box-shadow:inset 5px 4px 7px rgba(255,255,255,.35)}
+.doraNose:after{content:"";position:absolute;left:11px;top:34px;width:3px;height:57px;background:#222}
+.doraMouth{position:absolute;left:76px;top:173px;width:128px;height:63px;border-bottom:5px solid #222;border-radius:0 0 60% 60%;z-index:6;transition:.12s}
+.doraWhiskers{position:absolute;width:88px;height:2px;background:#202020;z-index:7;transform-origin:right center}.doraWhiskers.w1{left:-50px;top:145px;transform:rotate(8deg)}.doraWhiskers.w2{left:-50px;top:166px}.doraWhiskers.w3{left:-50px;top:187px;transform:rotate(-8deg)}.doraWhiskers.w4{right:-50px;top:145px;transform:rotate(-8deg)}.doraWhiskers.w5{right:-50px;top:166px}.doraWhiskers.w6{right:-50px;top:187px;transform:rotate(8deg)}
+.doraBody{position:absolute;left:36px;top:250px;width:208px;height:145px;background:#fff;border-radius:35% 35% 42% 42%;z-index:2;border:2px solid rgba(0,0,0,.08)}
+.doraBell{position:absolute;left:calc(50% - 25px);top:242px;width:50px;height:43px;background:#f6c52f;border:3px solid #b88405;border-radius:50%;z-index:8;box-shadow:inset 5px 5px 8px rgba(255,255,255,.3)}
+.doraBell:after{content:"";position:absolute;left:19px;bottom:2px;width:9px;height:9px;border-radius:50%;background:#6c4c00}.doraBell:before{content:"";position:absolute;left:7px;right:7px;bottom:11px;height:4px;background:#b88405}
+.doraPocket{position:absolute;left:78px;top:306px;width:124px;height:68px;background:#fff;border:3px solid #222;border-top:0;border-radius:0 0 50% 50%;z-index:4}
+.doraArm{position:absolute;top:275px;width:75px;height:105px;background:#fff;border-radius:50%;z-index:1}.doraArm.left{left:-42px;transform:rotate(25deg)}.doraArm.right{right:-42px;transform:rotate(-25deg)}
+.doraFoot{position:absolute;top:380px;width:94px;height:45px;background:#fff;border-radius:50%;z-index:5;border:2px solid #ddd}.doraFoot.left{left:34px}.doraFoot.right{right:34px}
+.doraActionEmoji{position:absolute;right:5px;top:38px;font-size:38px;z-index:20;filter:drop-shadow(0 5px 8px #0005);opacity:0;transform:scale(.6);transition:.2s}
+.avatar.doraemon.speaking .doraMouth{height:42px;animation:doraTalk .12s infinite alternate}
+.avatar.doraemon.speaking .doraHead{animation:doraTalkHead .8s ease-in-out infinite}
+.avatar.doraemon.listening .doraAura{animation:doraListen 1.2s ease-in-out infinite}
+.avatar.doraemon.thinking .doraAura{animation:doraThink 1s ease-in-out infinite}
+.avatar.doraemon.dance{animation:doraDance .42s ease-in-out infinite}
+.avatar.doraemon.dance .doraHead{animation:doraDanceHead .42s ease-in-out infinite}
+.avatar.doraemon.dance .doraArm.left{animation:doraArmL .42s ease-in-out infinite}
+.avatar.doraemon.dance .doraArm.right{animation:doraArmR .42s ease-in-out infinite}
+.avatar.doraemon.jump{animation:doraJump .65s ease-in-out 3}
+.avatar.doraemon.wave .doraArm.right{animation:doraWave .35s ease-in-out 6}
+.avatar.doraemon.laugh .doraHead{animation:doraLaugh .2s ease-in-out 7}
+.avatar.doraemon.actionShow .doraActionEmoji{opacity:1;transform:scale(1)}
+@keyframes doraFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes doraTalk{to{height:12px;transform:scaleX(.75)}}@keyframes doraTalkHead{50%{transform:rotate(1deg) translateY(-2px)}}@keyframes doraListen{50%{transform:scale(1.06);opacity:.78}}@keyframes doraThink{50%{transform:rotate(-1deg) scale(1.05)}}
+@keyframes doraDance{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-10px) rotate(-6deg)}50%{transform:translateY(0) rotate(5deg)}75%{transform:translateY(-10px) rotate(-5deg)}}
+@keyframes doraDanceHead{50%{transform:rotate(8deg)}}@keyframes doraArmL{50%{transform:rotate(-50deg) translateY(-15px)}}@keyframes doraArmR{50%{transform:rotate(50deg) translateY(-15px)}}
+@keyframes doraJump{50%{transform:translateY(-90px) scale(1.04)}}@keyframes doraWave{50%{transform:rotate(-45deg) translateY(-18px)}}@keyframes doraLaugh{50%{transform:rotate(3deg) scale(1.03)}}
+@media(max-width:560px){.avatar.doraemon{--avatar-scale:.7;transform:scale(.72);margin:-12px 0 -42px}.avatar.doraemon.dance{animation:doraDanceMobile .42s ease-in-out infinite}.avatar.doraemon .doraActionEmoji{right:-8px}}
+@keyframes doraDanceMobile{0%,100%{transform:scale(.72) translateY(0) rotate(0)}50%{transform:scale(.72) translateY(-8px) rotate(5deg)}}
+</style><style id="doraemon-fix-v28">
+#avatar.doraemon{width:360px!important;height:540px!important;position:relative!important;display:block!important;overflow:visible!important;animation:doraFloat2 4s ease-in-out infinite!important;filter:drop-shadow(0 24px 30px rgba(0,0,0,.4))!important}
+#avatar.doraemon .doraHead{left:40px!important;top:55px!important;width:280px!important;height:400px!important;background:linear-gradient(150deg,#55c8ff,#1598e4 58%,#0870ba)!important;border:4px solid #075c9d!important;box-shadow:inset -18px -25px 32px rgba(0,44,100,.18),inset 15px 10px 25px rgba(255,255,255,.13)!important}
+#avatar.doraemon .doraWhiteFace{left:20px!important;top:80px!important;width:240px!important;height:180px!important;background:#fff!important;border-radius:50%!important}
+#avatar.doraemon .doraEye{top:58px!important;width:68px!important;height:84px!important;background:#fff!important;border:3px solid #111!important;border-radius:50%!important}
+#avatar.doraemon .doraEyeL{left:68px!important}#avatar.doraemon .doraEyeR{right:68px!important}
+#avatar.doraemon .doraEye i{left:23px!important;top:26px!important;width:20px!important;height:31px!important;background:#111!important;border-radius:50%!important}
+#avatar.doraemon .doraNose{top:132px!important;width:38px!important;height:38px!important;background:#ef3340!important}
+#avatar.doraemon .doraMouth{left:75px!important;top:176px!important;width:130px!important;height:64px!important;border-bottom:5px solid #222!important}
+#avatar.doraemon .doraBody{left:34px!important;top:248px!important;width:212px!important;height:150px!important;background:#fff!important;border-radius:35% 35% 42% 42%!important}
+#avatar.doraemon .doraBell{top:241px!important;width:52px!important;height:44px!important;background:#ffd23c!important}
+#avatar.doraemon .doraPocket{left:77px!important;top:307px!important;width:126px!important;height:70px!important;background:#fff!important}
+#avatar.doraemon .doraArm{top:274px!important;width:76px!important;height:106px!important;background:#fff!important}
+#avatar.doraemon .doraFoot{top:382px!important;width:96px!important;height:46px!important;background:#fff!important}
+#avatar.doraemon .doraActionEmoji{z-index:50!important}
+#avatar.doraemon.speaking .doraMouth{animation:doraTalk2 .11s infinite alternate!important}
+#avatar.doraemon.speaking .doraHead{animation:doraHeadTalk2 .7s ease-in-out infinite!important}
+#avatar.doraemon.dance{animation:doraDance2 .4s ease-in-out infinite!important}
+#avatar.doraemon.dance .doraArm.left{animation:doraArm2L .4s ease-in-out infinite!important}
+#avatar.doraemon.dance .doraArm.right{animation:doraArm2R .4s ease-in-out infinite!important}
+#avatar.doraemon.jump{animation:doraJump2 .6s ease-in-out 3!important}
+#avatar.doraemon.wave .doraArm.right{animation:doraWave2 .3s ease-in-out 7!important}
+#avatar.doraemon.laugh .doraHead{animation:doraLaugh2 .16s ease-in-out 10!important}
+@keyframes doraFloat2{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes doraTalk2{to{height:12px;transform:scaleX(.75)}}
+@keyframes doraHeadTalk2{50%{transform:rotate(1deg) translateY(-3px)}}
+@keyframes doraDance2{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-12px) rotate(-7deg)}50%{transform:rotate(7deg)}75%{transform:translateY(-12px) rotate(-6deg)}}
+@keyframes doraArm2L{50%{transform:rotate(-55deg) translate(-8px,-14px)}}
+@keyframes doraArm2R{50%{transform:rotate(55deg) translate(8px,-14px)}}
+@keyframes doraJump2{50%{transform:translateY(-90px) scale(1.04)}}
+@keyframes doraWave2{50%{transform:rotate(-55deg) translate(-8px,-20px)}}
+@keyframes doraLaugh2{50%{transform:rotate(3deg) scale(1.04)}}
+@media(max-width:560px){#avatar.doraemon{transform:scale(.68)!important;transform-origin:50% 0!important;margin:-10px 0 -65px!important}}
+</style><style id="doraemon-actions-v28">
+#avatar.doraemon.spin{animation:doraSpin3 .75s ease-in-out 2!important}
+#avatar.doraemon.clap .doraArm.left{animation:doraClapL3 .28s ease-in-out 6!important}
+#avatar.doraemon.clap .doraArm.right{animation:doraClapR3 .28s ease-in-out 6!important}
+#avatar.doraemon.sleep .doraEye{transform:scaleY(.08)!important;transform-origin:center}
+#avatar.doraemon.surprise{animation:doraSurprise3 .35s ease-in-out 4!important}
+@keyframes doraSpin3{50%{transform:rotateY(180deg) scale(1.02)}}
+@keyframes doraClapL3{50%{transform:translateX(34px) rotate(18deg)}}
+@keyframes doraClapR3{50%{transform:translateX(-34px) rotate(-18deg)}}
+@keyframes doraSurprise3{50%{transform:scale(1.06) translateY(-4px)}}
+</style></head>
+<body>
+<div id="bootFallback" style="position:fixed;inset:0;z-index:100000;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui,-apple-system,Segoe UI,sans-serif;text-align:center;padding:24px"><div><div style="font-size:30px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><div style="margin-top:10px;color:#67e8f9;font-size:13px">Starting securely…</div><div id="bootError" style="margin-top:12px;color:#ff9ba7;font-size:11px;max-width:320px"></div></div></div><div class="wrap">
+<header class="brand"><div class="company">SITA RAM</div><div class="product"><b>HAYAGRIVA</b><small>AI ACTION • SAFETY • DAILY LIFE</small></div><div class="status"><span class="dot"></span>Owner protected</div></header>
+
+<section id="auth" class="auth card">
+<h1>Welcome back.</h1><p class="muted">Hayagriva is your voice-first personal AI companion for daily life, study, family support and safety.</p>
+<button id="google" class="google">G &nbsp; Continue with Google</button>
+<form id="authForm"><label id="nameLabel" style="display:none">Name</label><input id="name" style="display:none" placeholder="Your name"><label>Email</label><input id="email" type="email" required placeholder="you@example.com"><label>Password</label><input id="password" type="password" minlength="6" required placeholder="Password"><button id="authBtn" class="primary">Sign in securely</button></form>
+<div class="switch"><span id="switchText">New to Hayagriva?</span> <button id="switch">Create account</button></div><div id="authMsg" class="msgAuth"></div>
+</section>
+
+<section id="app" class="app">
+<div class="topbar"><div class="productMark">HAYAGRIVA <span class="liveBadge">● LIVE</span></div><div style="display:flex;gap:7px"><button id="ownerVoice" class="pill">Owner Voice</button><button id="permissions" class="pill">Settings &amp; Permissions</button><button id="logout" class="pill">Sign out</button></div></div>
+<div id="permissionSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px"><h2 style="margin:4px 0 6px">Settings &amp; Permissions</h2><p class="muted" style="margin-top:0">Control Hayagriva features and device access from one place. Allowed items can be switched Off at any time.</p>
+<div id="permissionList" style="display:grid;gap:8px;margin-top:14px"></div>
+<div class="cameraActions"><button id="closePermissions" class="cancel">Close</button></div></div></div>
+<div id="mindnessSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:620px">
+<h2 style="margin:4px 0 6px">Mindness</h2><p class="muted" style="margin-top:0">A separate AI space for calm conversations, reflection, focus and daily mindset support.</p>
+<div id="mindnessMessages" style="max-height:300px;overflow:auto;padding:8px 2px"></div>
+<form id="mindnessForm" class="composer" style="margin-top:10px"><textarea id="mindnessPrompt" rows="1" required placeholder="Talk to Mindness…"></textarea><button class="send">Send</button></form>
+<div class="cameraActions"><button id="closeMindness" class="cancel" type="button">Close</button></div>
+</div></div>
+<div id="ownerVoiceSheet" class="cameraSheet" hidden><div class="cameraBox" style="max-width:560px">
+<h2 style="margin:4px 0 6px">Owner Voice Lock</h2>
+<p class="muted" style="margin-top:0">Record three natural samples. Hayagriva will compare the three voice patterns before saving the owner profile. Normal chat stays available to other people; protected actions require the verified owner voice.</p>
+<div id="ownerVoiceStatus" class="intentHint" style="font-size:11px;margin:14px 0">Not enrolled • 3 samples required</div>
+<div class="cameraActions">
+<button id="enrollOwnerVoice" class="confirm">Start 3 voice samples</button>
+<button id="submitOwnerVoice" class="confirm" disabled>Submit &amp; Save Owner Voice</button>
+<button id="clearOwnerVoice" class="cancel">Clear</button>
+<button id="closeOwnerVoice" class="cancel">Close</button>
+</div></div></div>
+
+<div class="stage">
+<main class="avatarCard card">
+<div class="avatarGlow"></div>
+<div id="avatar" class="avatar doraemon listening" aria-label="Blue robot cat character">
+<div class="doraAura"></div>
+<div class="doraHead">
+  <div class="doraEye doraEyeL"><i></i></div><div class="doraEye doraEyeR"><i></i></div>
+  <div class="doraWhiteFace"></div><div class="doraNose"></div><div class="doraMouth"></div>
+  <div class="doraWhiskers w1"></div><div class="doraWhiskers w2"></div><div class="doraWhiskers w3"></div>
+  <div class="doraWhiskers w4"></div><div class="doraWhiskers w5"></div><div class="doraWhiskers w6"></div>
+  <div class="doraBody"></div><div class="doraBell"></div><div class="doraPocket"></div>
+  <div class="doraArm left"></div><div class="doraArm right"></div>
+  <div class="doraFoot left"></div><div class="doraFoot right"></div>
+</div>
+<div class="doraActionEmoji" id="doraActionEmoji">✨</div>
+</div>
+<div class="avatarLabel"><div class="avatarName">HAYAGRIVA</div><div id="avatarState" class="avatarState">AI detection • waiting</div><div id="mic" class="mic" role="status" aria-label="Automatic voice detection active">🎙️</div></div>
+</main>
+
+
+
+<div id="messages" class="messages" aria-live="polite"></div>
+<div class="composerWrap">
+
+<form id="chatForm" class="composer"><textarea id="prompt" rows="1" required placeholder="Speak or type to Hayagriva…"></textarea><button class="send">Send</button></form>
+<div class="inputTools"><button type="button" class="mini" id="photo">🖼️ Gallery</button><button type="button" class="mini" id="video">🎥 Video</button><button type="button" class="mini" id="file">📄 Document</button><button type="button" class="mini" id="camera">📸 Camera</button><button type="button" class="mini" id="liveCamera">🎥 Live camera</button><button type="button" class="mini" id="voiceTest">🔊 Voice test</button><button type="button" class="mini" id="mindness">🧠 Mindness</button><input id="files" type="file" multiple hidden><input id="cameraInput" type="file" accept="image/*" capture="environment" hidden><div id="cameraSheet" class="cameraSheet" hidden><div class="cameraBox"><video id="cameraVideo" autoplay playsinline></video><div class="cameraActions"><button id="flipCamera" class="pill" type="button">↔ Front camera</button><button id="takePhoto" class="confirm" type="button">Capture</button><button id="closeCamera" class="cancel" type="button">Close</button></div></div></div></div>
+</div>
+</div>
+</section>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL="https://geapiwgzcpqylocaegzh.supabase.co";
+const KEY="sb_publishable_Kb6-uQ1XaOgP9TdR1xSlrQ_dJUYnPQm";
+const SB_CLIENT=window.supabase?.createClient?.(SUPABASE_URL,KEY,{auth:{persistSession:false,autoRefreshToken:false,detectSessionInUrl:false}});
+const SESSION_KEY="hayagriva_session_v2";
+const $=id=>document.getElementById(id);
+const AI_REQUEST_TIMEOUT_MS=35000;
+let sending=false,voiceBusy=false,lastVoiceText="",lastVoiceAt=0;
+let session=null,signup=false,history=[],listening=false,recognition=null,selectedFiles=[],voiceMode=false,cameraStream=null,cameraFacing="environment";
+const OWNER_VOICE_KEY="hayagriva_owner_voice_v3";
+const OWNER_VOICE_THRESHOLD=0.82;
+let ownerVoiceProfile=null,voiceMonitorStream=null,voiceAudioContext=null,voiceAnalyser=null,voiceFeatureTimer=null,voiceFeatureHistory=[],ownerVoiceCapture=false,ownerVoiceSampleVectors=[],lockedSpeechVoice=null,ownerVerifiedUntil=0;
+function accountKey(){return session?.user?.id||session?.user?.email||"local-user"}
+function ownerVoiceStorageKey(){return OWNER_VOICE_KEY+"_"+accountKey()}
+const APP_PERM_KEY="hayagriva_permissions_v2";
+const FEATURE_KEY="hayagriva_features_v2";
+const DEFAULT_APP_PERMS={mic:false,camera:false,location:false,contacts:false,sync:true,notifications:false,call:false,sms:false,whatsapp:false,social:false,booking:false,food:false,shopping:false,maps:false,documents:false,budget:false};
+const DEFAULT_FEATURES={voiceDetection:true,liveCamera:true,aiActions:true,voiceResponses:true};
+function readPrefs(key,defaults){try{return {...defaults,...JSON.parse(localStorage.getItem(key)||"{}")}}catch{return {...defaults}}}
+function appPerms(){return readPrefs(APP_PERM_KEY,DEFAULT_APP_PERMS)}
+function featurePrefs(){return readPrefs(FEATURE_KEY,DEFAULT_FEATURES)}
+function setAppPerm(key,value){const p=appPerms();p[key]=!!value;localStorage.setItem(APP_PERM_KEY,JSON.stringify(p))}
+function setFeature(key,value){const p=featurePrefs();p[key]=!!value;localStorage.setItem(FEATURE_KEY,JSON.stringify(p))}
+function permKey(type){const map={get_location:"location",weather:"location",maps:"location",call:"call",sms:"sms",whatsapp:"whatsapp",sos:"call"};return map[type]||null}
+function loadOwnerVoice(){try{ownerVoiceProfile=JSON.parse(localStorage.getItem(ownerVoiceStorageKey())||"null")}catch{ownerVoiceProfile=null}return ownerVoiceProfile}
+function normalizeVoiceVector(v){const n=Math.sqrt(v.reduce((a,x)=>a+x*x,0))||1;return v.map(x=>x/n)}
+function meanVoiceVectors(vs){if(!vs.length)return null;const n=vs[0].length,out=new Array(n).fill(0);for(const v of vs)for(let i=0;i<n;i++)out[i]+=v[i];return normalizeVoiceVector(out.map(x=>x/vs.length))}
+function cosineVoice(a,b){if(!a||!b||a.length!==b.length)return 0;let dot=0,na=0,nb=0;for(let i=0;i<a.length;i++){dot+=a[i]*b[i];na+=a[i]*a[i];nb+=b[i]*b[i]}return dot/(Math.sqrt(na*nb)||1)}
+function voiceFeature(){
+  if(!voiceAnalyser)return null;
+  const td=new Float32Array(voiceAnalyser.fftSize),fd=new Float32Array(voiceAnalyser.frequencyBinCount);
+  voiceAnalyser.getFloatTimeDomainData(td);voiceAnalyser.getFloatFrequencyData(fd);
+  let sum=0,z=0;for(let i=0;i<td.length;i++){sum+=td[i]*td[i];if(i>0&&((td[i]>=0)!==(td[i-1]>=0)))z++}
+  const rms=Math.sqrt(sum/td.length);if(rms<0.008)return null;
+  const bands=[];const bins=fd.length;
+  for(let b=0;b<18;b++){const lo=Math.max(1,Math.floor(Math.pow(bins-1,b/18))),hi=Math.max(lo+1,Math.floor(Math.pow(bins-1,(b+1)/18)));let e=0,n=0;for(let i=lo;i<Math.min(hi,bins);i++){const db=Math.max(-100,fd[i]);e+=Math.pow(10,db/10);n++}bands.push(Math.log1p(e/Math.max(1,n)))}
+  const total=bands.reduce((a,x)=>a+x,0)||1;
+  const centroid=bands.reduce((a,x,i)=>a+x*(i+1),0)/(total*18);
+  return normalizeVoiceVector(bands.map(x=>x/total).concat([centroid,z/td.length,rms*8]));
+}
+function voiceMatchScore(){
+  const recent=voiceFeatureHistory.slice(-24).filter(Boolean),v=meanVoiceVectors(recent);if(!v||!ownerVoiceProfile)return 0;
+  const vectors=Array.isArray(ownerVoiceProfile.vectors)?ownerVoiceProfile.vectors:[ownerVoiceProfile.vector].filter(Boolean);
+  if(!vectors.length)return 0;
+  const scores=vectors.map(x=>cosineVoice(v,x)).sort((a,b)=>b-a);
+  return scores.length>=2?(scores[0]+scores[1])/2:scores[0];
+}
+let lastMicError=null;
+function mediaErrorMessage(e){
+  const n=e?.name||"";
+  if(n==="NotAllowedError")return "Microphone access is blocked for this site. Allow microphone for this GitHub Pages site in the browser.";
+  if(n==="NotFoundError")return "No usable microphone was found on this device.";
+  if(n==="NotReadableError")return "The microphone is already busy or the browser could not read it. Close another app using the mic, then retry.";
+  if(n==="AbortError")return "Microphone access was interrupted. Please retry.";
+  if(n==="SecurityError")return "The browser blocked microphone access for this page.";
+  if(n==="TypeError")return "This browser does not expose microphone access here.";
+  return "Microphone could not be opened ("+(n||"unknown error")+"). Please retry.";
+}
+async function startVoiceMonitor(){
+  if(voiceAnalyser&&voiceMonitorStream?.active)return true;
+  if(!navigator.mediaDevices?.getUserMedia){lastMicError={name:"TypeError"};return false}
+  try{
+    voiceMonitorStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+    lastMicError=null;setAppPerm("mic",true);
+    voiceAudioContext=new (window.AudioContext||window.webkitAudioContext)();
+    if(voiceAudioContext.state==="suspended")try{await voiceAudioContext.resume()}catch{}
+    const src=voiceAudioContext.createMediaStreamSource(voiceMonitorStream);
+    voiceAnalyser=voiceAudioContext.createAnalyser();voiceAnalyser.fftSize=2048;voiceAnalyser.smoothingTimeConstant=.35;src.connect(voiceAnalyser);
+    voiceFeatureTimer=setInterval(()=>{const f=voiceFeature();if(f){voiceFeatureHistory.push(f);if(voiceFeatureHistory.length>70)voiceFeatureHistory.shift()}},100);
+    return true;
+  }catch(e){lastMicError=e;try{voiceMonitorStream?.getTracks().forEach(t=>t.stop())}catch{}voiceMonitorStream=null;return false}
+}
+function stopVoiceMonitor(){if(voiceFeatureTimer)clearInterval(voiceFeatureTimer);voiceFeatureTimer=null;try{voiceMonitorStream?.getTracks().forEach(t=>t.stop())}catch{}voiceMonitorStream=null;try{voiceAudioContext?.close()}catch{}voiceAudioContext=null;voiceAnalyser=null;voiceFeatureHistory=[]}
+function updateOwnerVoiceUI(){
+  const b=$("ownerVoice"),s=$("ownerVoiceStatus");if(!b||!s)return;
+  const ok=!!ownerVoiceProfile;b.textContent=ok?"Owner Voice ✓":"Owner Voice";
+  s.textContent=ok?"Owner voice saved • 3-pattern verification ready.":"Not enrolled • 3 samples required.";
+  s.className="intentHint "+(ok?"ready":"locked");
+}
+function openOwnerVoice(){loadOwnerVoice();updateOwnerVoiceUI();$("ownerVoiceSheet").hidden=false;if(recognition)try{recognition.stop()}catch{}voiceMode=false;listening=false}
+function closeOwnerVoice(){$("ownerVoiceSheet").hidden=true;if(ownerVoiceProfile){voiceMode=true;setTimeout(startVoice,500)}}
+async function captureOwnerSample(index){
+  if(recognition)try{recognition.stop()}catch{}
+  stopVoiceMonitor();$("ownerVoiceStatus").textContent="Opening microphone…";
+  if(!(await startVoiceMonitor())){
+    state("Microphone unavailable");
+    $("ownerVoiceStatus").textContent=mediaErrorMessage(lastMicError)+" Fix the browser permission if needed, then tap Start 3 voice samples again.";
+    return false;
+  }
+  ownerVoiceCapture=true;voiceFeatureHistory=[];
+  const prompts=[
+    "Sample 1 • Say: Hello Hayagriva, I am your owner.",
+    "Sample 2 • Say the same sentence naturally in your normal voice.",
+    "Sample 3 • Say: Hayagriva, you can follow my commands."
+  ];
+  state("Listening • owner voice sample "+index+" of 3");
+  $("ownerVoiceStatus").textContent=prompts[index-1];
+  await new Promise(r=>setTimeout(r,3000));
+  ownerVoiceCapture=false;
+  const frames=voiceFeatureHistory.slice(-30).filter(Boolean),v=meanVoiceVectors(frames);
+  if(!v||frames.length<5){$("ownerVoiceStatus").textContent="Sample "+index+" was too quiet or no microphone frames were received. Tap Start 3 voice samples to retry.";return false}
+  ownerVoiceSampleVectors.push(v);
+  $("ownerVoiceStatus").textContent="Sample "+index+" saved • "+ownerVoiceSampleVectors.length+"/3";
+  return true;
+}
+async function enrollOwnerVoice(){
+  ownerVoiceSampleVectors=[];
+  $("submitOwnerVoice").disabled=true;
+  for(let i=1;i<=3;i++){
+    const ok=await captureOwnerSample(i);if(!ok){ownerVoiceCapture=false;return}
+    if(i<3)await new Promise(r=>setTimeout(r,700));
+  }
+  stopVoiceMonitor();
+  $("ownerVoiceStatus").textContent="All 3 samples detected. Review complete, then press Submit & Save Owner Voice.";
+  $("submitOwnerVoice").disabled=false;
+  state("Voice samples ready • submit owner profile");
+}
+function submitOwnerVoice(){
+  if(ownerVoiceSampleVectors.length!==3)return;
+  ownerVoiceProfile={version:4,vectors:ownerVoiceSampleVectors.slice(),vector:meanVoiceVectors(ownerVoiceSampleVectors),createdAt:Date.now()};
+  localStorage.setItem(ownerVoiceStorageKey(),JSON.stringify(ownerVoiceProfile));
+  ownerVoiceSampleVectors=[];stopVoiceMonitor();$("submitOwnerVoice").disabled=true;updateOwnerVoiceUI();
+  $("ownerVoiceStatus").textContent="Owner voice verified and saved. Close this panel to restart voice detection.";
+  state("Owner voice saved • ready");
+  speak("Owner voice verified and saved. Ab aapki protected voice actions ready hain.");
+}
+function clearOwnerVoice(){ownerVoiceProfile=null;ownerVoiceSampleVectors=[];localStorage.removeItem(ownerVoiceStorageKey());updateOwnerVoiceUI();$("ownerVoiceStatus").textContent="Owner voice cleared. Record 3 samples again."}
+function save(s){session=s;if(s)localStorage.setItem(SESSION_KEY,JSON.stringify(s));else localStorage.removeItem(SESSION_KEY)}
+function saved(){try{return JSON.parse(localStorage.getItem(SESSION_KEY)||"null")}catch{return null}}
+function authMsg(t){$("authMsg").textContent=t||""}
+function bootDone(){const b=$("bootFallback");if(b)b.style.display="none"}
+function showApp(){ $("auth").style.display="none";$("app").style.display="block" }
+function showAuth(){ $("auth").style.display="block";$("app").style.display="none" }
+async function authFetch(path,body){const r=await fetch(SUPABASE_URL+path,{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+KEY},body:JSON.stringify(body)});let d={};try{d=await r.json()}catch{}if(!r.ok)throw new Error(d.msg||d.error_description||d.message||d.error||"Request failed");return d}
+async function refresh(s){try{const d=await authFetch("/auth/v1/token?grant_type=refresh_token",{refresh_token:s.refresh_token});save(d);return d}catch{save(null);return null}}
+
+$("google").onclick=async()=>{
+  const btn=$("google");btn.disabled=true;authMsg("");
+  const red="https://subhambhuyan889-sys.github.io/Hayagriva/";
+  try{
+    const r=await fetch(SUPABASE_URL+"/auth/v1/settings",{headers:{apikey:KEY}});
+    const s=await r.json().catch(()=>({}));
+    if(!r.ok)throw new Error("Supabase Auth settings could not be checked.");
+    if(!s.external?.google){
+      authMsg("Google Sign-In is not enabled in the Supabase project yet. Enable Google under Authentication → Providers, then add the Google OAuth Client ID/Secret.");
+      return;
+    }
+    location.href=SUPABASE_URL+"/auth/v1/authorize?provider=google&redirect_to="+encodeURIComponent(red)+"&apikey="+encodeURIComponent(KEY);
+  }catch(err){
+    authMsg(err.message||"Google Sign-In could not start. Please try again.");
+  }finally{btn.disabled=false}
+}
+$("switch").onclick=()=>{signup=!signup;$("name").style.display=signup?"block":"none";$("nameLabel").style.display=signup?"block":"none";$("name").required=signup;$("authBtn").textContent=signup?"Create account":"Sign in securely";$("switchText").textContent=signup?"Already have an account?":"New to Hayagriva?";$("switch").textContent=signup?"Sign in":"Create account";authMsg("")}
+$("authForm").onsubmit=async e=>{e.preventDefault();$("authBtn").disabled=true;authMsg("");try{let d;if(signup)d=await authFetch("/auth/v1/signup",{email:$("email").value.trim(),password:$("password").value,data:{display_name:$("name").value.trim()}});else d=await authFetch("/auth/v1/token?grant_type=password",{email:$("email").value.trim(),password:$("password").value});if(!d.access_token){authMsg("Account created. Check your email, then sign in.");return}save(d);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},700)}catch(err){authMsg(err.message||"Please try again")}finally{$("authBtn").disabled=false}}
+$("logout").onclick=()=>{stopVoice();stopVoiceMonitor();if(currentAudio)try{currentAudio.pause()}catch{}save(null);history=[];showAuth()}
+
+function addBubble(role,text){
+  if(!text)return;
+  const box=$("messages");if(!box)return;
+  const d=document.createElement("div");d.className="bubble "+(role==="user"?"user":"ai");d.textContent=text;box.append(d);box.scrollTop=box.scrollHeight;
+}
+function state(s){$("avatarState").textContent=s;const a=$("avatar");a.classList.add("doraemon");a.classList.remove("listening","thinking","speaking");if(s.startsWith("Listening"))a.classList.add("listening");if(s.startsWith("Thinking"))a.classList.add("thinking");if(s.startsWith("Speaking"))a.classList.add("speaking")}
+let currentAudio=null;
+function pickVoice(lang){
+  const vs=speechSynthesis.getVoices();
+  if(lockedSpeechVoice&&vs.includes(lockedSpeechVoice))return lockedSpeechVoice;
+  const names=["hi-IN","Hindi","Swara","Heera","Google हिन्दी","Google Hindi","en-IN","Indian English","Aditi","Ravi","Samantha"];
+  lockedSpeechVoice=vs.find(v=>names.some(x=>(v.lang||"").includes(x)||(v.name||"").includes(x)))||vs[0]||null;
+  return lockedSpeechVoice;
+}
+function audioToWav(b64,mime){
+  if(!b64)return "";
+  if(/wav/i.test(mime||""))return "data:"+mime+";base64,"+b64;
+  const raw=atob(b64),pcm=new Uint8Array(raw.length);for(let i=0;i<raw.length;i++)pcm[i]=raw.charCodeAt(i);
+  const rate=24000,bytes=pcm.length,buf=new ArrayBuffer(44+bytes),v=new DataView(buf),w=(o,s)=>{for(let i=0;i<s.length;i++)v.setUint8(o+i,s.charCodeAt(i))};
+  w(0,"RIFF");v.setUint32(4,36+bytes,true);w(8,"WAVE");w(12,"fmt ");v.setUint32(16,16,true);v.setUint16(20,1,true);v.setUint16(22,1,true);v.setUint32(24,rate,true);v.setUint32(28,rate*2,true);v.setUint16(32,2,true);v.setUint16(34,16,true);w(36,"data");v.setUint32(40,bytes,true);new Uint8Array(buf,44).set(pcm);
+  let s="";for(let i=0;i<buf.byteLength;i+=0x8000)s+=String.fromCharCode(...new Uint8Array(buf,i,Math.min(0x8000,buf.byteLength-i)));
+  return "data:audio/wav;base64,"+btoa(s);
+}
+function speak(t,audioB64,audioMime){
+  if(!t||!featurePrefs().voiceResponses)return;
+  try{speechSynthesis.cancel()}catch{}if(currentAudio)try{currentAudio.pause()}catch{}
+  currentAudio=null;
+  if(audioB64)try{
+    currentAudio=new Audio(audioToWav(audioB64,audioMime||"audio/wav"));currentAudio.volume=1;
+    currentAudio.onplay=()=>state("Speaking • Doraemon is talking");
+    currentAudio.onended=()=>{currentAudio=null;state("Listening • Doraemon ready")};
+    currentAudio.onerror=()=>{currentAudio=null;fallbackSpeak(t)};
+    const p=currentAudio.play();if(p?.catch)p.catch(()=>{currentAudio=null;fallbackSpeak(t)});
+    return;
+  }catch{}
+  fallbackSpeak(t);
+}
+function fallbackSpeak(t){
+  if(!("speechSynthesis"in window)){state("Listening • voice output unavailable");return}
+  try{speechSynthesis.cancel()}catch{}
+  const go=()=>{const vs=speechSynthesis.getVoices(),u=new SpeechSynthesisUtterance(t);u.lang=/[\\u0900-\\u097F]/.test(t)?"hi-IN":"en-IN";u.voice=vs.find(v=>/hi-IN|en-IN/i.test(v.lang||""))||vs.find(v=>/Hindi|India/i.test(v.name||""))||vs[0]||null;u.rate=.78;u.pitch=1.55;u.volume=1;u.onstart=()=>state("Speaking • Doraemon is talking");u.onend=()=>state("Listening • Doraemon ready");u.onerror=()=>state("Listening • voice output unavailable");speechSynthesis.speak(u)};
+  if(speechSynthesis.getVoices().length)go();else setTimeout(go,300);
+}
+function stopVoice(){voiceMode=false;if(recognition)try{recognition.stop()}catch{}listening=false;$("mic").classList.remove("active");state(ownerVoiceProfile?"Voice paused • owner protected":"Voice locked • enroll owner voice first")}
+function handleVoiceText(t){
+  t=(t||"").trim();if(!t||sending||voiceBusy)return;
+  const now=Date.now();if(t===lastVoiceText&&now-lastVoiceAt<3500)return;
+  lastVoiceText=t;lastVoiceAt=now;voiceBusy=true;if(recognition)try{recognition.stop()}catch{}
+  let owner=false;
+  if(ownerVoiceProfile){
+    const score=voiceMatchScore();
+    owner=score>=OWNER_VOICE_THRESHOLD;
+    ownerVerifiedUntil=owner?Date.now()+60000:0;
+  }
+  $("prompt").value=t;
+  $("chatForm").requestSubmit();
+  // The AI chat is available to every user. Only owner-matched speech receives owner-action authority.
+  if(!owner)state("Listening • normal user mode");
+}
+async function startVoice(){
+  if(!featurePrefs().voiceDetection){voiceMode=false;state("Voice detection • Off");return}
+  if(appPerms().mic===false){voiceMode=false;state("Microphone access • Off");return}
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;voiceMode=true;
+  if(!ownerVoiceProfile){state("Listening • normal voice chat (owner actions locked)")}
+  if(!SR){speak("Voice input is not supported in this browser.");return}
+  if(listening)return;
+  if(!recognition){
+    recognition=new SR();recognition.lang="en-IN";recognition.interimResults=true;recognition.continuous=true;recognition.maxAlternatives=1;
+    recognition.onstart=()=>{listening=true;$("mic").classList.add("active");state("Listening • speak now")};
+    recognition.onresult=e=>{let finalText="";for(let i=e.resultIndex;i<e.results.length;i++){const tx=e.results[i][0].transcript.trim();if(e.results[i].isFinal)finalText+=(" "+tx);else $("prompt").value=tx}if(finalText.trim()){$("prompt").value="";handleVoiceText(finalText.trim())}};
+    recognition.onerror=e=>{listening=false;$("mic").classList.remove("active");if(e.error==="not-allowed")state("Voice input blocked • allow microphone/speech access");else if(e.error==="audio-capture")state("Microphone is busy • retrying voice input");else if(e.error==="network")state("Voice recognition network error • retrying");else if(e.error==="no-speech")state("Listening • no speech detected");else if(voiceMode&&!sending&&!voiceBusy){state("Voice paused • "+(e.error||"recognition error"));setTimeout(startVoice,900)}else state("Voice paused")};
+    recognition.onend=()=>{listening=false;$("mic").classList.remove("active");if(voiceMode&&!sending&&!voiceBusy)setTimeout(startVoice,650)};
+  }
+  // Keep the live monitor and feed its same microphone track to SpeechRecognition where supported.
+  const monitorOK=await startVoiceMonitor();
+  if(!monitorOK){state("Microphone unavailable • check browser permission");return}
+  try{
+    recognition.start();
+  }catch(e){
+    const detail=(e?.name||"SpeechRecognitionError")+(e?.message?": "+e.message:"");
+    state("Voice input could not start • "+detail);
+    addBubble("ai","Voice input failed ("+detail+"). Check microphone permission and retry.");
+  }
+}
+$("ownerVoice").onclick=openOwnerVoice;
+$("closeOwnerVoice").onclick=closeOwnerVoice;
+$("enrollOwnerVoice").onclick=async()=>{const b=$("enrollOwnerVoice");b.disabled=true;try{await enrollOwnerVoice()}finally{b.disabled=false}};
+$("submitOwnerVoice").onclick=submitOwnerVoice;
+$("clearOwnerVoice").onclick=clearOwnerVoice;
+
+async function permissionState(name){
+  try{return await navigator.permissions.query({name})}catch{return null}
+}
+async function refreshPermissions(){
+  const rows=[
+    ["Microphone","microphone","Voice detection, owner voice enrollment and voice commands.","mic"],
+    ["Camera","camera","Live Camera and photo capture.","camera"],
+    ["Location","geolocation","Location, routes and local weather when requested.","location"],
+    ["Contacts","contacts","Selected contacts for supported call/message actions.","contacts"],
+    ["Notifications","notifications","Useful Hayagriva notifications.","notifications"],
+    ["Calls","app","Call actions after owner verification and confirmation.","call"],
+    ["SMS","app","SMS actions after owner verification and confirmation.","sms"],
+    ["WhatsApp","app","WhatsApp actions after owner verification and confirmation.","whatsapp"]
+  ];
+  const box=$("permissionList");box.innerHTML="";const p=appPerms();
+  const fp=featurePrefs();
+  const featureRows=[
+    ["Voice detection","Automatically listen for speech. Only owner voice can authorize actions.","voiceDetection"],
+    ["Live camera","Allow the Live Camera feature.","liveCamera"],
+    ["AI actions","Allow owner-authorized AI actions.","aiActions"],
+    ["Voice responses","Allow Hayagriva to speak replies aloud.","voiceResponses"]
+  ];
+  for(const [label,desc,key] of featureRows){
+    const row=document.createElement("div");row.className="permissionRow";
+    const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
+    const btn=document.createElement("button");btn.textContent=fp[key]?"ON":"OFF";btn.className=fp[key]?"allowed":"blocked";
+    btn.onclick=()=>{setFeature(key,!featurePrefs()[key]);refreshPermissions();if(key==="voiceDetection"&&!featurePrefs().voiceDetection)stopVoice();if(key==="voiceDetection"&&featurePrefs().voiceDetection&&ownerVoiceProfile)startVoice()};
+    row.append(info,btn);box.append(row);
+  }
+  const divider=document.createElement("div");divider.className="intentHint";divider.textContent="Device permissions";box.append(divider);
+  for(const [label,name,desc,key] of rows){
+    const row=document.createElement("div");row.className="permissionRow";
+    const info=document.createElement("div");info.innerHTML="<b>"+label+"</b><small>"+desc+"</small>";
+    const btn=document.createElement("button");
+    if(name==="contacts"){
+      const supported="contacts" in navigator && typeof navigator.contacts.select==="function";
+      btn.textContent=supported?(p.contacts?"Allowed":"Off"):"Not supported";
+      btn.className=supported?(p.contacts?"allowed":"blocked"):"";
+      btn.disabled=!supported;
+      btn.onclick=async()=>{
+        if(!appPerms().contacts){setAppPerm("contacts",true);refreshPermissions();return}
+        try{await navigator.contacts.select(["name","tel","email"],{multiple:false})}catch{}
+        finally{await refreshPermissions()}
+      };
+      row.append(info,btn);box.append(row);continue
+    }
+    if(name==="app"){
+      btn.textContent=p[key]?"ON":"OFF";btn.className=p[key]?"allowed":"blocked";
+      btn.onclick=()=>{setAppPerm(key,!appPerms()[key]);refreshPermissions()};
+    }else{
+      const st=await permissionState(name);
+      const browserState=st?.state||"unknown";
+      const appAllowed=!!p[key];
+      btn.textContent=appAllowed?(browserState==="granted"?"ON • Ready":"ON"):"OFF";
+      btn.className=appAllowed?"allowed":"blocked";
+      btn.title="Device permission: "+browserState+". Hayagriva access: "+(appAllowed?"ON":"OFF");
+      btn.onclick=async()=>{
+        const now=appPerms()[key];
+        if(now){setAppPerm(key,false);await refreshPermissions();return}
+        try{
+          if(name==="microphone")await navigator.mediaDevices.getUserMedia({audio:true});
+          else if(name==="camera")await navigator.mediaDevices.getUserMedia({video:true});
+          else if(name==="geolocation")await getPos();
+          else if(name==="notifications"&&"Notification"in window)await Notification.requestPermission();
+          setAppPerm(key,true);
+        }catch(e){
+          // Keep app access off when the browser/OS rejects the request, but expose the exact device/browser error.
+          setAppPerm(key,false);
+          const detail=(e?.name||"PermissionError")+(e?.message?": "+e.message:"");
+          const label=String(name||"permission").replace(/^./,m=>m.toUpperCase());
+          const errNote=box.querySelector("[data-permission-error]")||document.createElement("div");
+          errNote.dataset.permissionError="1";errNote.className="intentHint";errNote.style.color="#ff9ba7";errNote.textContent=label+" permission error: "+detail;
+          box.append(errNote);
+        }finally{await refreshPermissions()}
+      };
+    }
+    row.append(info,btn);box.append(row);
+  }
+  const note=document.createElement("div");note.className="intentHint";note.textContent="These are the only sensitive permissions Hayagriva needs. ON lets Hayagriva use the capability when required; the browser/OS still controls the final device permission.";box.append(note);
+}
+$("permissions").onclick=async()=>{$("permissionSheet").hidden=false;await refreshPermissions()};
+$("closePermissions").onclick=()=>{$("permissionSheet").hidden=true};
+
+function actionCard(a){
+  if(!a||a.type==="none")return;
+    if(!featurePrefs().aiActions){speak("AI Actions are turned off in Settings.");return}
+  if(Date.now()>ownerVerifiedUntil){speak("This action is available only after owner voice verification.");return}const pk=permKey(a.type);if(pk&&appPerms()[pk]===false){speak("That action is disabled in Hayagriva Permissions.");return}
+  const labels={get_location:"use your location",weather:"check local weather",maps:"open maps",search:"search the web",food:"find food",shopping:"find shopping",booking:"find booking options",vehicle:"find vehicle help",call:"make a call",sms:"send an SMS",whatsapp:"open WhatsApp",email:"prepare an email",sos:"start the emergency action"};
+  const ok=window.confirm("Hayagriva wants to "+(labels[a.type]||"take an action")+" .\n\n"+(a.query||"This action")+"\n\nContinue?");
+  if(ok)runAction(a);else speak("Okay. I won't perform that action.");
+}
+async function getPos(){return new Promise((res,rej)=>navigator.geolocation?navigator.geolocation.getCurrentPosition(res,rej,{enableHighAccuracy:true,timeout:10000}):rej(new Error("Location is not available in this browser.")))}
+async function runAction(a){try{state("Thinking • working on it");const pk=permKey(a.type);if(pk&&appPerms()[pk]===false){const t="That action is disabled in your Hayagriva Permissions.";addBubble("ai",t);speak(t);return;}if(a.type==="get_location"){const p=await getPos();const q=p.coords.latitude+","+p.coords.longitude;const t="Your current coordinates are "+q+". I can open them in Maps if you want.";addBubble("ai",t);speak(t);window.open("https://www.google.com/maps?q="+encodeURIComponent(q),"_blank");return}
+if(a.type==="weather"){const p=await getPos();const u="https://api.open-meteo.com/v1/forecast?latitude="+p.coords.latitude+"&longitude="+p.coords.longitude+"&current=temperature_2m,relative_humidity_2m,weather_code,wind_speed_10m";const r=await fetch(u);const d=await r.json();const c=d.current;const t="Right now it is "+c.temperature_2m+" degrees Celsius, humidity "+c.relative_humidity_2m+" percent, with wind around "+c.wind_speed_10m+" kilometers per hour.";addBubble("ai",t);speak(t);return}
+if(a.type==="maps"){window.open("https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(a.query||"nearby places"),"_blank");return}
+if(a.type==="search"){window.open("https://www.google.com/search?q="+encodeURIComponent(a.query||"Hayagriva"),"_blank");return}
+if(["food","shopping","booking","vehicle"].includes(a.type)){window.open("https://www.google.com/search?q="+encodeURIComponent(a.query||a.type),"_blank");return}
+if(a.type==="call"){location.href="tel:"+encodeURIComponent(a.target||"");return}
+if(a.type==="sms"){location.href="sms:"+encodeURIComponent(a.target||"")+"?body="+encodeURIComponent(a.query||"");return}
+if(a.type==="whatsapp"){window.open("https://wa.me/?text="+encodeURIComponent(a.query||""),"_blank");return}
+if(a.type==="instagram"){window.open("https://www.instagram.com/","_blank");return}
+if(a.type==="facebook"){window.open("https://www.facebook.com/","_blank");return}
+if(a.type==="youtube"){window.open(a.mode==="upload"?"https://studio.youtube.com/":"https://www.youtube.com/results?search_query="+encodeURIComponent(a.query||""),"_blank");return}
+if(a.type==="social_post"){const platform=a.platform||"instagram";const urls={instagram:"https://www.instagram.com/",facebook:"https://www.facebook.com/",youtube:"https://studio.youtube.com/"};window.open(urls[platform]||urls.instagram,"_blank");return}
+if(a.type==="email"){location.href="mailto:"+encodeURIComponent(a.target||"")+"?subject="+encodeURIComponent("Hayagriva")+"&body="+encodeURIComponent(a.query||"");return}
+if(a.type==="sos"){location.href="tel:112";return}
+}catch(e){const t="I couldn't complete that action: "+(e.message||"permission or device access was unavailable.");addBubble("ai",t);speak(t)}finally{state("Listening • ready when you are")}}
+
+function detectLocalAction(message){
+  const m=(message||"").trim(),l=m.toLowerCase();
+  let x;
+  const phone=m.match(/(?:call|phone|कॉल|फोन)\\s+(?:to\\s+)?(.+)/i);if(phone)return {type:"call",target:phone[1].replace(/[^+\\d]/g,"")};
+  const sms=m.match(/(?:sms|text|message|मैसेज)\\s+(?:to\\s+)?(.+)/i);if(sms)return {type:"sms",target:"",query:sms[1]};
+  if(/whatsapp|व्हाट्सऐप/i.test(l))return {type:"whatsapp",query:m};
+  if(/instagram|इंस्टाग्राम/i.test(l)&&/reel|post|पोस्ट|upload|अपलोड/i.test(l))return {type:"social_post",platform:"instagram",query:m};
+  if(/facebook|फेसबुक/i.test(l)&&/post|पोस्ट|check|चेक|open|खोल/i.test(l))return {type:"facebook",query:m};
+  if(/youtube|यूट्यूब/i.test(l)&&/upload|post|पोस्ट|video|वीडियो/i.test(l))return {type:"youtube",mode:"upload",query:m};
+  if(/youtube|यूट्यूब/i.test(l)&&/search|check|चेक|देख|खोज/i.test(l))return {type:"youtube",mode:"search",query:m};
+  if(/(?:cab|uber|ola|taxi|booking|बुक)/i.test(l))return {type:"booking",query:m};
+  return null;
+}
+async function sendMessage(message){
+  if(!message||sending)return;
+  sending=true;
+  if(recognition)try{recognition.stop()}catch{}
+addBubble("user",(selectedFiles.length?"📎 "+selectedFiles.map(f=>f.name).join(", ")+"\n":"")+message);state("Thinking • Hayagriva is working");const attachments=[];for(const f of selectedFiles.slice(0,3)){if(f.size>4*1024*1024)throw new Error(f.name+" is larger than 4 MB");attachments.push(await new Promise((res,rej)=>{const fr=new FileReader();fr.onload=()=>res({name:f.name,mimeType:f.type||"application/octet-stream",data:fr.result});fr.onerror=()=>rej(new Error("Could not read "+f.name));fr.readAsDataURL(f)}))}
+let data;
+try{const c=new AbortController(),timer=setTimeout(()=>c.abort(),AI_REQUEST_TIMEOUT_MS);try{let d,err;
+const requestBody={message,history,attachments,audio:true};
+const waitNotice=setTimeout(()=>state("Still connecting • AI is taking longer than usual"),5000);
+const directRequest=async()=>{
+  const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai?ts="+Date.now(),{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+(session?.access_token||KEY)},body:JSON.stringify(requestBody),cache:"no-store",mode:"cors",signal:c.signal});
+  const raw=await r.text();let x={};try{x=raw?JSON.parse(raw):{}}catch{}
+  if(!r.ok){const detail=x?.providers?.find(v=>v?.detail)?.detail;throw new Error(detail||x.error||"Hayagriva server error "+r.status)}
+  return x;
+};
+try{
+  d=await directRequest();
+}catch(primaryErr){
+  if(SB_CLIENT){
+    const invoke=SB_CLIENT.functions.invoke("hayagriva-ai",{headers:session?.access_token?{"Authorization":"Bearer "+session.access_token}:{"apikey":KEY},body:requestBody});
+    const result=await Promise.race([invoke,new Promise((_,rej)=>setTimeout(()=>rej(Object.assign(new Error("Hayagriva request timed out."),{name:"AbortError"})),19000))]);
+    d=result.data;err=result.error;
+    if(err){
+      let detail="";
+      try{if(err.context?.json)detail=(await err.context.json())?.error||""}catch{}
+      throw new Error(detail||err.message||primaryErr.message||"Hayagriva connection failed.");
+    }
+  }else throw primaryErr;
+}
+data=d;
+}finally{clearTimeout(timer);clearTimeout(waitNotice)}
+}catch(e){throw e}
+if(!data)throw new Error("Hayagriva did not respond");let reply=data.reply||data.text||"I'm here. Tell me what you need.";if(/who are you|what is your name|your name|कौन हो|नाम क्या|तुम कौन|तुम्हारा नाम/i.test(message))reply="Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.";addBubble("ai",reply);history.push({role:"user",text:message},{role:"model",text:reply});history=history.slice(-20);selectedFiles=[];$("files").value="";const identityReply=/who are you|what is your name|your name|कौन हो|नाम क्या|तुम कौन|तुम्हारा नाम/i.test(message);speak(reply,identityReply?"":data.audio,data.audio_mime);const characterAction=detectCharacterAction(message);if(characterAction)performCharacterAction(characterAction);const localAction=detectLocalAction(message);if(data.action?.type&&data.action.type!=="none")actionCard(data.action);else if(localAction)actionCard(localAction)}
+$("chatForm").onsubmit=async e=>{
+  e.preventDefault();
+  const m=$("prompt").value.trim();$("prompt").value="";$("chatForm")?.classList.remove("up");
+  if(!m||sending)return;
+  try{await sendMessage(m)}
+  catch(err){const t="Hayagriva: "+(err.name==="AbortError"?"The AI request timed out after 35 seconds. Check your connection and retry.":err.message||"Please try again.");addBubble("ai",t);speak(t);state("Listening • ready when you are")}
+  finally{
+    sending=false;voiceBusy=false;
+    if(voiceMode&&!listening&&ownerVoiceProfile)setTimeout(startVoice,900);
+  }
+}
+$("prompt").addEventListener("input",()=>{$("chatForm").classList.toggle("up",$("prompt").value.length>0);$("prompt").style.height="auto";$("prompt").style.height=Math.min($("prompt").scrollHeight,160)+"px"});
+
+function pick(kind){$("files").accept=kind==="image"?"image/*":kind==="video"?"video/*":".pdf,.txt,.doc,.docx";$("files").removeAttribute("capture");$("files").click()}
+$("photo").onclick=()=>pick("image");$("video").onclick=()=>pick("video");$("file").onclick=()=>pick("file");$("camera").onclick=()=>$("cameraInput").click();
+async function openLiveCamera(){
+  if(!featurePrefs().liveCamera){const t="Live Camera is turned off in Settings.";addBubble("ai",t);return}
+  if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
+  try{
+    if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());
+    cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:cameraFacing}},audio:false});
+    $("cameraVideo").srcObject=cameraStream;
+    $("cameraSheet").hidden=false;
+    $("flipCamera").textContent=cameraFacing==="environment"?"↔ Front camera":"↔ Back camera";
+    state("Listening • "+(cameraFacing==="environment"?"back":"front")+" camera is active");
+  }catch(e){
+    const detail=(e?.name||"CameraError")+(e?.message?": "+e.message:"");
+    const t="Camera access failed ("+detail+"). Check your browser/Android camera permission and whether another app is using the camera.";
+    addBubble("ai",t);speak(t);state("Camera error • "+detail);
+  }
+}
+$("liveCamera").onclick=openLiveCamera;
+$("voiceTest").onclick=()=>{const old=featurePrefs().voiceResponses;if(!old)setFeature("voiceResponses",true);speak("Namaste! Main Doraemon hoon. Main Hayagriva app ke andar tumhara robot-cat companion hoon.");};
+$("flipCamera").onclick=async()=>{
+  if(appPerms().camera===false){const t="Camera access is Off in Hayagriva Permissions.";addBubble("ai",t);speak(t);return}
+  if($("cameraSheet").hidden)return;
+  const previousFacing=cameraFacing;
+  const nextFacing=previousFacing==="environment"?"user":"environment";
+  try{
+    const nextStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:nextFacing}},audio:false});
+    const previousStream=cameraStream;
+    cameraStream=nextStream;
+    cameraFacing=nextFacing;
+    $("cameraVideo").srcObject=nextStream;
+    $("flipCamera").textContent=cameraFacing==="environment"?"↔ Front camera":"↔ Back camera";
+    previousStream?.getTracks?.().forEach(t=>t.stop());
+    setAppPerm("camera",true);
+    state("Listening • "+(cameraFacing==="environment"?"back":"front")+" camera is active");
+  }catch(e){
+    cameraFacing=previousFacing;
+    const detail=(e?.name||"CameraError")+(e?.message?": "+e.message:"");
+    const t="Camera switch failed ("+detail+"). The current camera was kept active. Check browser/device camera permission.";
+    addBubble("ai",t);speak(t);state("Camera error • "+detail);
+  }
+};
+$("closeCamera").onclick=()=>{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null;$("cameraVideo").srcObject=null;$("cameraSheet").hidden=true};
+$("takePhoto").onclick=()=>{const v=$("cameraVideo"),c=document.createElement("canvas");c.width=v.videoWidth||1280;c.height=v.videoHeight||720;c.getContext("2d").drawImage(v,0,0,c.width,c.height);c.toBlob(blob=>{const f=new File([blob],"hayagriva-camera.jpg",{type:"image/jpeg"});selectedFiles=[f];$("closeCamera").click();const t="Photo captured. What should I check in it?";addBubble("ai",t);speak(t)},"image/jpeg",.9)};
+$("files").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Attached "+selectedFiles.length+" file(s). Tell me what you want me to do with them.";addBubble("ai",t);speak(t)}};$("cameraInput").onchange=e=>{selectedFiles=[...e.target.files];if(selectedFiles.length){const t="Photo captured. What should I check in it?";addBubble("ai",t);speak(t)}};
+
+document.querySelectorAll("[data-say]").forEach(b=>b.onclick=()=>{$("prompt").value=b.dataset.say;$("chatForm").classList.add("up");$("prompt").focus();});
+if("speechSynthesis"in window)speechSynthesis.addEventListener("voiceschanged",()=>speechSynthesis.getVoices());
+document.addEventListener("pointermove",e=>{
+  const a=$("avatar");if(!a)return;
+  const r=a.getBoundingClientRect(),cx=r.left+r.width/2,cy=r.top+r.height*.28;
+  const dx=Math.max(-5,Math.min(5,(e.clientX-cx)/55)),dy=Math.max(-4,Math.min(4,(e.clientY-cy)/70));
+  a.style.setProperty("--gaze-x",dx+"px");a.style.setProperty("--gaze-y",dy+"px");
+  const head=a.querySelector(".head");if(head){head.style.transform="rotate("+Math.max(-2.2,Math.min(2.2,(e.clientX-cx)/220))+"deg)"} 
+});
+$("prompt").addEventListener("focus",()=>state("Listening • ready when you are"));
+
+(async()=>{bootDone();showAuth();const hash=new URLSearchParams(location.hash.replace(/^#/,""));if(hash.get("access_token")&&hash.get("refresh_token")){save({access_token:hash.get("access_token"),refresh_token:hash.get("refresh_token"),expires_at:hash.get("expires_at")});history=[];window.history.replaceState(null,"",location.pathname);showApp();loadOwnerVoice();updateOwnerVoiceUI();speak("Namaste. Main Hayagriva hoon.");setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200);return}const s=saved();if(s){const f=await refresh(s);if(f){showApp();loadOwnerVoice();updateOwnerVoiceUI();setTimeout(()=>{if(ownerVoiceProfile)startVoice();else openOwnerVoice()},1200)}}})();
+let mindnessHistory=[];
+function mindnessBubble(role,text){
+  const box=$("mindnessMessages");if(!box)return;
+  const d=document.createElement("div");d.className="bubble "+(role==="user"?"user":"ai");d.style.display="block";d.textContent=text;box.append(d);box.scrollTop=box.scrollHeight;
+}
+$("mindness").onclick=()=>{$("mindnessSheet").hidden=false};
+$("closeMindness").onclick=()=>{$("mindnessSheet").hidden=true};
+$("mindnessForm").onsubmit=async e=>{
+ e.preventDefault();const input=$("mindnessPrompt"),m=input.value.trim();if(!m||sending)return;input.value="";
+ mindnessBubble("user",m);state("Thinking • Mindness is working");
+ try{
+  const r=await fetch(SUPABASE_URL+"/functions/v1/hayagriva-ai?ts="+Date.now(),{method:"POST",headers:{"Content-Type":"application/json","apikey":KEY,"Authorization":"Bearer "+(session?.access_token||KEY)},body:JSON.stringify({message:"Mindness mode: respond as a calm, supportive mindset and reflection assistant. User says: "+m,history:mindnessHistory,attachments:[],audio:true}),cache:"no-store",mode:"cors"});
+  const d=await r.json();if(!r.ok)throw new Error(d.error||"Mindness request failed");
+  const reply=d.reply||d.text||"I'm here. Tell me what's on your mind.";
+  mindnessBubble("ai",reply);mindnessHistory.push({role:"user",text:m},{role:"model",text:reply});mindnessHistory=mindnessHistory.slice(-12);speak(reply);
+ }catch(err){mindnessBubble("ai","Mindness: "+(err.message||"Please try again."))}
+ finally{state("Listening • ready when you are")}
+};
+</script>
+<noscript><div style="position:fixed;inset:0;z-index:99999;display:grid;place-items:center;background:#03050a;color:#f8fbff;font-family:system-ui;text-align:center;padding:24px"><div><div style="font-size:28px;font-weight:900;letter-spacing:.18em">HAYAGRIVA</div><p style="color:#91a0b4">Please enable JavaScript to use Hayagriva.</p></div></div></noscript><script>
+function syncDoraemonState(){const a=$("avatar");if(a){a.classList.add("doraemon");a.setAttribute("aria-label","Doraemon-style robot cat companion")}}
+function performCharacterAction(kind){
+  const a=$("avatar");if(!a)return;
+  const map={dance:["dance","💃"],jump:["jump","⬆️"],wave:["wave","👋"],laugh:["laugh","😂"],comedy:["laugh","🤣"],spin:["spin","🌀"],clap:["clap","👏"],sleep:["sleep","😴"],surprise:["surprise","😲"]};const v=map[kind];if(!v)return;
+  a.classList.remove("dance","jump","wave","laugh","spin","clap","sleep","surprise","actionShow");void a.offsetWidth;a.classList.add(v[0],"actionShow");
+  const e=$("doraActionEmoji");if(e)e.textContent=v[1];clearTimeout(window.__doraActionTimer);window.__doraActionTimer=setTimeout(()=>a.classList.remove(v[0],"actionShow"),kind==="dance"?4300:2800);
+}
+function detectCharacterAction(message){
+  const l=(message||"").toLowerCase();
+  if(/dance|नाच|डांस|नृत्य/.test(l))return"dance";if(/jump|कूद|उछल/.test(l))return"jump";if(/wave|हाथ हिला|हाथ हिलाओ|bye/.test(l))return"wave";
+  if(/laugh|हंस|हँस|comedy|कॉमेडी|मजाक|joke/.test(l))return"comedy";if(/spin|घूम|घुमो|घुमा/.test(l))return"spin";if(/clap|तालियां|ताली|ताली बजाओ/.test(l))return"clap";if(/sleep|सो जाओ|सोना|sleepy/.test(l))return"sleep";if(/surprise|आश्चर्य|चौंक|shocked/.test(l))return"surprise";return null;
+}
+</script></body>
+</html>
